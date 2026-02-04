@@ -1,0 +1,3220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pressure Ulcers Assessment – College of Nursing</title>
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #3498db;
+      --success: #2ecc71;
+      --danger: #e74c3c;
+      --warning: #f39c12;
+      --light: #ecf0f1;
+      --dark: #34495e;
+      --info: #17a2b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+      color: #333;
+      padding: 10px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding: 25px 20px;
+      background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+      color: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .header h2 {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+    .header h3 {
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+      font-weight: 500;      opacity: 0.85;
+    }
+    .header p.subtitle {
+      font-size: 1.25rem;
+      font-weight: bold;
+      opacity: 0.95;
+      letter-spacing: 0.5px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .form-section {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      border: 1px solid #eaeaea;
+      transition: transform 0.3s ease;
+    }
+    .form-section:hover {
+      transform: translateY(-2px);
+    }
+    .form-section h2 {
+      color: var(--secondary);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eaeaea;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+    }
+    .form-section h2 i {
+      margin-right: 10px;
+      font-size: 1.4rem;
+    }
+    .form-section h3 {
+      color: var(--dark);
+      margin: 20px 0 15px;
+      padding-left: 10px;
+      border-left: 4px solid var(--info);
+    }
+    label {
+      display: block;
+      margin: 14px 0 8px;
+      font-weight: 600;
+      color: var(--dark);
+      font-size: 1rem;
+    }    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d9e6;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s;
+      background: #f8fafc;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--secondary);
+      outline: none;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+    .checkbox-group,
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 12px 0;
+    }
+    .checkbox-group label,
+    .radio-group label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+    .checkbox-group label:hover,
+    .radio-group label:hover {
+      background: #f0f7ff;
+    }
+    fieldset {
+      border: 2px solid #eaeaea;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      background: #fcfdfe;
+    }
+    legend {      font-weight: bold;
+      color: var(--secondary);
+      padding: 0 15px;
+      font-size: 1.1rem;
+      background: white;
+      border-radius: 6px;
+      border: 2px solid #eaeaea;
+    }
+    .ulcer-entry {
+      position: relative;
+      padding: 25px;
+      border: 2px solid #e0e7ff;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      background: linear-gradient(135deg, #fafafe 0%, #f5f7ff 100%);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+    .ulcer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px dashed #d0d7ff;
+    }
+    .ulcer-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .remove-ulcer, .duplicate-ulcer {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+    }
+    .remove-ulcer { 
+      background: var(--danger); 
+      color: white; 
+    }
+    .remove-ulcer:hover { 
+      background: #c0392b;
+      transform: translateY(-1px);
+    }
+    .duplicate-ulcer { 
+      background: var(--warning); 
+      color: white; 
+    }    .duplicate-ulcer:hover { 
+      background: #e67e22;
+      transform: translateY(-1px);
+    }
+    .wound-area-display {
+      background: linear-gradient(135deg, #e8f4fc 0%, #d4e8f8 100%);
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 10px;
+      text-align: center;
+      border: 1px solid #c5e1f5;
+      font-size: 1.1rem;
+    }
+    button#addUlcerBtn, .submit-btn {
+      background: linear-gradient(135deg, var(--success) 0%, #27ae60 100%);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin: 15px 0;
+      transition: all 0.3s;
+      display: block;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+    }
+    button#addUlcerBtn:hover, .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(46, 204, 113, 0.3);
+    }
+    .risk-category {
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.1rem;
+      border: 2px solid;
+    }
+    .very-high { 
+      background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); 
+      color: #c62828;
+      border-color: #ef9a9a;
+    }
+    .high { 
+      background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); 
+      color: #e65100;
+      border-color: #ffb74d;    }
+    .moderate { 
+      background: linear-gradient(135deg, #fff8e1 0%, #fff176 100%); 
+      color: #f57f17;
+      border-color: #ffd54f;
+    }
+    .mild { 
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); 
+      color: #2e7d32;
+      border-color: #a5d6a7;
+    }
+    .none { 
+      background: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 100%); 
+      color: #558b2f;
+      border-color: #c5e1a5;
+    }
+    
+    .error {
+      color: var(--danger);
+      font-size: 0.9rem;
+      margin-top: 5px;
+      display: none;
+      padding: 5px 10px;
+      background: #ffebee;
+      border-radius: 4px;
+      border-left: 3px solid var(--danger);
+    }
+    
+    .site-checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 15px 0;
+    }
+    
+    .clinical-note {
+      font-size: 0.95rem;
+      color: #5a6c7d;
+      font-style: italic;
+      margin: 8px 0;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      border-left: 4px solid var(--info);
+    }
+    
+    /* Braden Scale Styles */
+    .braden-scale,
+    .norton-scale,
+    .waterlow-scale {      background: linear-gradient(135deg, #f8fafc 0%, #e3f2fd 100%);
+      border: 2px solid #bbdefb;
+    }
+    .braden-subscale,
+    .norton-subscale,
+    .waterlow-subscale {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      border-left: 5px solid var(--info);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    }
+    .scale-options {
+      margin: 15px 0;
+    }
+    .scale-option {
+      display: block;
+      padding: 15px;
+      margin: 10px 0;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: white;
+    }
+    .scale-option:hover {
+      background: #f0f7ff;
+      border-color: #bbdefb;
+      transform: translateX(5px);
+    }
+    .scale-option.selected {
+      background: #e3f2fd;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+    }
+    .option-score {
+      display: inline-block;
+      background: var(--secondary);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: bold;
+      margin-right: 10px;
+      font-size: 0.9rem;
+    }
+    .option-description {
+      color: #555;
+      font-size: 0.95rem;
+      margin-top: 5px;      padding-left: 35px;
+    }
+    .braden-score-display,
+    .norton-score-display,
+    .waterlow-score-display {
+      text-align: center;
+      padding: 25px;
+      background: white;
+      border-radius: 10px;
+      margin-top: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .braden-total,
+    .norton-total,
+    .waterlow-total {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+    .risk-visualization {
+      display: flex;
+      height: 40px;
+      margin: 20px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .risk-segment {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 0.9em;
+      transition: all 0.3s;
+      cursor: help;
+    }
+    .risk-segment:hover {
+      transform: scale(1.05);
+      z-index: 1;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    
+    /* Enhanced Exudate Styles */
+    .exudate-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;      margin: 15px 0;
+    }
+    .exudate-item {
+      padding: 15px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid #e0e7ff;
+    }
+    .scale-radio {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .scale-radio label {
+      padding: 10px;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      margin: 0;
+      transition: all 0.3s;
+    }
+    .scale-radio label:hover {
+      background: #f0f7ff;
+      border-color: #bbdefb;
+    }
+    
+    /* Wound Base Styles */
+    .color-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 15px 0;
+    }
+    .color-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s;
+      flex: 1;
+      min-width: 180px;
+    }
+    .color-option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);    }
+    .color-option.selected {
+      border-color: var(--secondary);
+      background: #f0f7ff;
+    }
+    .color-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+    }
+    
+    /* Bates-Jensen Wound Assessment Tool */
+    .bates-jensen-tool {
+      background: linear-gradient(135deg, #fff8f8 0%, #ffebee 100%);
+      padding: 25px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border: 2px solid #ffcdd2;
+    }
+    .bates-jensen-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 20px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+    .bates-jensen-table th {
+      background: var(--primary);
+      color: white;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+    }
+    .bates-jensen-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #eee;
+      background: white;
+    }
+    .bates-jensen-table tr:hover td {
+      background: #f8f9fa;
+    }
+    .bates-jensen-table tfoot td {
+      background: #f5f5f5;
+      font-weight: bold;
+      border-top: 2px solid #ddd;
+    }
+        /* Tooltips */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: help;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 300px;
+      background: var(--dark);
+      color: white;
+      text-align: left;
+      padding: 12px;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 100;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.9rem;
+      font-weight: normal;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    /* Buttons Container */
+    .buttons-container {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    
+    /* Print Styles */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .form-section {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+      }      button {
+        display: none !important;
+      }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .checkbox-group, .radio-group {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .site-checkbox-group {
+        grid-template-columns: 1fr;
+      }
+      .header h1 { font-size: 2rem; }
+      .header h2 { font-size: 1.3rem; }
+      .header h3 { font-size: 1.15rem; }
+      .header p.subtitle { font-size: 1.05rem; }
+      .exudate-grid {
+        grid-template-columns: 1fr;
+      }
+      .color-option {
+        min-width: 100%;
+      }
+      .ulcer-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
+      .ulcer-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+    
+    /* Risk Assessment Tool Selection */
+    .tool-selection {
+      display: flex;
+      gap: 15px;
+      margin: 15px 0;
+    }
+    .tool-selection label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 15px;
+      border: 2px solid #d1d9e6;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;      background: #f8fafc;
+    }
+    .tool-selection label:hover {
+      background: #e3f2fd;
+      border-color: var(--secondary);
+    }
+    .tool-selection input[type="radio"] {
+      display: none;
+    }
+    .tool-selection label.selected {
+      background: #e3f2fd;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+    
+    /* Scale Sections */
+    .scale-section {
+      display: none;
+    }
+    .scale-section.active {
+      display: block;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- College Header -->
+  <div class="header">
+    <h1><i class="fas fa-university"></i> College of Nursing</h1>
+    <h2>Medical College</h2>
+    <h3>Medical-Surgical Nursing Department</h3>
+    <p class="subtitle">Comprehensive Pressure Ulcer Assessment & Risk Calculator</p>
+  </div>
+
+  <form id="pressureUlcerForm">
+
+    <!-- Patient Info -->
+    <div class="form-section">
+      <h2><i class="fas fa-user-injured"></i> 1. Patient Information</h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div>
+          <label for="patientName">Full Name:</label>
+          <input type="text" id="patientName" name="patientName" required>
+        </div>
+        <div>
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age" min="0" max="120">
+        </div>        <div>
+          <label for="IP No">In Patient Number (IP No):</label>
+          <input type="text" id="mrn" name="mrn">
+        </div>
+        <div>
+          <label for="ward">Ward/Unit:</label>
+          <input type="text" id="ward" name="ward">
+        </div>
+      </div>
+      
+      <label>Gender:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="gender" value="male"> <i class="fas fa-mars"></i> Male</label>
+        <label><input type="radio" name="gender" value="female"> <i class="fas fa-venus"></i> Female</label>
+        <label><input type="radio" name="gender" value="other"> <i class="fas fa-transgender-alt"></i> Other</label>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+        <div>
+          <label for="admissionDate">Date of Admission:</label>
+          <input type="date" id="admissionDate" name="admissionDate">
+        </div>
+        <div>
+          <label for="assessmentDate">Assessment Date:</label>
+          <input type="date" id="assessmentDate" name="assessmentDate" required>
+        </div>
+        <div>
+          <label for="assessedBy">Assessed By:</label>
+          <input type="text" id="assessedBy" name="assessedBy" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risk Assessment & Common Sites -->
+    <div class="form-section">
+      <h2><i class="fas fa-clipboard-check"></i> 2. Risk Assessment & Common Pressure Sore Sites</h2>
+      
+      <label>Risk Assessment Tool (Select only one):</label>
+      <div class="tool-selection">
+        <label>
+          <input type="radio" name="riskTool" value="braden" checked>
+          <i class="fas fa-calculator"></i> Braden Scale
+        </label>
+        <label>
+          <input type="radio" name="riskTool" value="norton">
+          <i class="fas fa-balance-scale"></i> Norton Scale
+        </label>
+        <label>
+          <input type="radio" name="riskTool" value="waterlow">
+          <i class="fas fa-weight"></i> Waterlow Scale        </label>
+      </div>
+      
+      <div class="clinical-note">
+        <i class="fas fa-info-circle"></i> Select only one standardized risk assessment tool based on clinical setting and patient population.
+      </div>
+      
+      <label>Key Risk Factors:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="riskFactors" value="immobility"> <i class="fas fa-bed"></i> Immobility</label>
+        <label><input type="checkbox" name="riskFactors" value="incontinence"> <i class="fas fa-toilet"></i> Incontinence</label>
+        <label><input type="checkbox" name="riskFactors" value="malnutrition"> <i class="fas fa-utensils"></i> Malnutrition</label>
+        <label><input type="checkbox" name="riskFactors" value="sensory"> <i class="fas fa-hand-paper"></i> Sensory Impairment</label>
+        <label><input type="checkbox" name="riskFactors" value="device"> <i class="fas fa-stethoscope"></i> Medical Device Use</label>
+        <label><input type="checkbox" name="riskFactors" value="diabetes"> <i class="fas fa-tint"></i> Diabetes Mellitus</label>
+        <label><input type="checkbox" name="riskFactors" value="vascular"> <i class="fas fa-heartbeat"></i> Peripheral Vascular Disease</label>
+      </div>
+      
+      <!-- Common Pressure Sore Sites -->
+      <label><strong><i class="fas fa-search-location"></i> Common Pressure Sore Sites (Check all inspected/affected):</strong></label>
+      <div class="site-checkbox-group">
+        <div><label><input type="checkbox" name="sites[]" value="sacrum"> <i class="fas fa-bone"></i> Sacrum</label></div>
+        <div><label><input type="checkbox" name="sites[]" value="coccyx"> <i class="fas fa-bone"></i> Coccyx</label></div>
+        <div><label><input type="checkbox" name="sites[]" value="heels"> <i class="fas fa-shoe-prints"></i> Heels</label></div>
+        <div><label><input type="checkbox" name="sites[]" value="ischial"> <i class="fas fa-chair"></i> Ischial Tuberosities</label></div>
+        <div><label><input type="checkbox" name="sites[]" value="trochanters"> <i class="fas fa-hip"></i> Greater Trochanters</label></div>
+        <div><label><input type="checkbox" name="sites[]" value="occiput"> <i class="fas fa-brain"></i> Occiput</label></div>
+        <div><label><input type="checkbox" name="sites[]" value="elbows"> <i class="fas fa-hand-point-up"></i> Elbows</label></div>
+        <div><label><input type="checkbox" name="sites[]" value="ankles"> <i class="fas fa-socks"></i> Ankles (Malleoli)</label></div>
+        <div><label><input type="checkbox" name="sites[]" value="scapulae"> <i class="fas fa-user"></i> Scapulae</label></div>
+        <div><label><input type="checkbox" name="sites[]" value="ribs"> <i class="fas fa-ribbon"></i> Ribs (side-lying)</label></div>
+        <div><label><input type="checkbox" name="sites[]" value="knees"> <i class="fas fa-running"></i> Knees (prone)</label></div>
+        <div><label><input type="checkbox" name="sites[]" value="ears"> <i class="fas fa-deaf"></i> Ears</label></div>
+      </div>
+      
+      <label><strong><i class="fas fa-tools"></i> Device-Related Sites:</strong></label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="sites[]" value="nares"> <i class="fas fa-wind"></i> Nares (O2 tubing)</label>
+        <label><input type="checkbox" name="sites[]" value="neck"> <i class="fas fa-user-neck"></i> Neck (collar)</label>
+        <label><input type="checkbox" name="sites[]" value="wrists"> <i class="fas fa-hand-paper"></i> Wrists (BP cuff)</label>
+        <label><input type="checkbox" name="sites[]" value="abdomen"> <i class="fas fa-belly"></i> Abdomen (belt)</label>
+        <label><input type="checkbox" name="sites[]" value="genitalia"> <i class="fas fa-procedures"></i> Genitalia (catheter)</label>
+        <label><input type="checkbox" name="sites[]" value="otherDevice"> <i class="fas fa-plus"></i> Other Device Site: <input type="text" name="otherDeviceSite" placeholder="Specify" style="width:150px;"></label>
+      </div>
+    </div>
+
+    <!-- Braden Scale Calculator -->
+    <div class="form-section braden-scale scale-section active" id="bradenScaleSection">
+      <h2><i class="fas fa-calculator"></i> 2.1 Braden Scale Assessment (Interactive Calculator)</h2>
+      <div class="clinical-note">        <i class="fas fa-lightbulb"></i> <strong>Instructions:</strong> Select one option for each category. The total score will be automatically calculated and risk category displayed.
+      </div>
+      
+      <!-- Sensory Perception -->
+      <div class="braden-subscale" id="sensorySubscale">
+        <h3><span class="tooltip">Sensory Perception (1-4) <span class="tooltiptext">Ability to respond meaningfully to pressure-related discomfort</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectBradenOption('sensory', 1, this)">
+            <span class="option-score">1</span> <strong>Completely Limited:</strong>
+            <div class="option-description">Unresponsive to painful stimuli due to diminished level of consciousness or sedation</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('sensory', 2, this)">
+            <span class="option-score">2</span> <strong>Very Limited:</strong>
+            <div class="option-description">Responds only to painful stimuli; cannot communicate discomfort except by moaning or restlessness</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('sensory', 3, this)">
+            <span class="option-score">3</span> <strong>Slightly Limited:</strong>
+            <div class="option-description">Responds to verbal commands but cannot always communicate discomfort or need to be turned</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('sensory', 4, this)">
+            <span class="option-score">4</span> <strong>No Impairment:</strong>
+            <div class="option-description">Responds to verbal commands; has no sensory deficit which would limit ability to feel pain</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Moisture -->
+      <div class="braden-subscale" id="moistureSubscale">
+        <h3><span class="tooltip">Moisture (1-4) <span class="tooltiptext">Degree to which skin is exposed to moisture</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectBradenOption('moisture', 1, this)">
+            <span class="option-score">1</span> <strong>Constantly Moist:</strong>
+            <div class="option-description">Skin is kept moist almost constantly by perspiration, urine, etc.; dampness is detected every time patient is moved or turned</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('moisture', 2, this)">
+            <span class="option-score">2</span> <strong>Very Moist:</strong>
+            <div class="option-description">Skin is often but not always moist; linen must be changed at least once a shift</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('moisture', 3, this)">
+            <span class="option-score">3</span> <strong>Occasionally Moist:</strong>
+            <div class="option-description">Skin is occasionally moist, requiring an extra linen change approximately once a day</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('moisture', 4, this)">
+            <span class="option-score">4</span> <strong>Rarely Moist:</strong>
+            <div class="option-description">Skin is usually dry; linen requires changing only at routine intervals</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Activity -->      <div class="braden-subscale" id="activitySubscale">
+        <h3><span class="tooltip">Activity (1-4) <span class="tooltiptext">Degree of physical activity</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectBradenOption('activity', 1, this)">
+            <span class="option-score">1</span> <strong>Bedfast:</strong>
+            <div class="option-description">Confined to bed</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('activity', 2, this)">
+            <span class="option-score">2</span> <strong>Chairfast:</strong>
+            <div class="option-description">Ability to walk severely limited or nonexistent; cannot bear own weight and/or must be assisted into chair or wheelchair</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('activity', 3, this)">
+            <span class="option-score">3</span> <strong>Walks Occasionally:</strong>
+            <div class="option-description">Walks occasionally during day but for very short distances, with or without assistance; spends majority of each shift in bed or chair</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('activity', 4, this)">
+            <span class="option-score">4</span> <strong>Walks Frequently:</strong>
+            <div class="option-description">Walks outside the room at least twice a day and inside room at least once every 2 hours during waking hours</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Mobility -->
+      <div class="braden-subscale" id="mobilitySubscale">
+        <h3><span class="tooltip">Mobility (1-4) <span class="tooltiptext">Ability to change and control body position</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectBradenOption('mobility', 1, this)">
+            <span class="option-score">1</span> <strong>Completely Immobile:</strong>
+            <div class="option-description">Does not make even slight changes in body or extremity position without assistance</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('mobility', 2, this)">
+            <span class="option-score">2</span> <strong>Very Limited:</strong>
+            <div class="option-description">Makes occasional slight changes in body or extremity position but unable to make frequent or significant changes independently</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('mobility', 3, this)">
+            <span class="option-score">3</span> <strong>Slightly Limited:</strong>
+            <div class="option-description">Makes frequent though slight changes in body or extremity position independently</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('mobility', 4, this)">
+            <span class="option-score">4</span> <strong>No Limitations:</strong>
+            <div class="option-description">Makes major and frequent changes in position without assistance</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Nutrition -->
+      <div class="braden-subscale" id="nutritionSubscale">
+        <h3><span class="tooltip">Nutrition (1-4) <span class="tooltiptext">Usual food intake pattern</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectBradenOption('nutrition', 1, this)">            <span class="option-score">1</span> <strong>Very Poor:</strong>
+            <div class="option-description">Never eats a complete meal; rarely eats more than 1/3 of any food offered; protein intake includes only 2 servings or less of meat or dairy products per day; takes fluids poorly</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('nutrition', 2, this)">
+            <span class="option-score">2</span> <strong>Probably Inadequate:</strong>
+            <div class="option-description">Rarely eats a complete meal and generally eats only about 1/2 of any food offered; protein intake includes only 3 servings of meat or dairy products per day; occasionally will take a dietary supplement</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('nutrition', 3, this)">
+            <span class="option-score">3</span> <strong>Adequate:</strong>
+            <div class="option-description">Eats over half of most meals; eats a total of 4 servings of protein (meat, dairy products) each day; occasionally refuses a meal but will usually take a supplement if offered</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('nutrition', 4, this)">
+            <span class="option-score">4</span> <strong>Excellent:</strong>
+            <div class="option-description">Eats most of every meal; never refuses a meal; usually eats a total of 4 or more servings of meat and dairy products; occasionally eats between meals; does not require supplementation</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Friction & Shear -->
+      <div class="braden-subscale" id="frictionSubscale">
+        <h3><span class="tooltip">Friction & Shear (1-3) <span class="tooltiptext">Problem requiring moderate/maximum assistance in moving</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectBradenOption('friction', 1, this)">
+            <span class="option-score">1</span> <strong>Problem:</strong>
+            <div class="option-description">Requires moderate to maximum assistance in moving; complete lifting without sliding against sheets is impossible; frequently slides down in bed or chair, requiring frequent repositioning with maximum assistance</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('friction', 2, this)">
+            <span class="option-score">2</span> <strong>Potential Problem:</strong>
+            <div class="option-description">Moves feebly or requires minimum assistance; during a move skin probably slides to some extent against sheets, chair, restraints, or other devices; maintains relatively good position in chair or bed most of the time but occasionally slides down</div>
+          </label>
+          <label class="scale-option" onclick="selectBradenOption('friction', 3, this)">
+            <span class="option-score">3</span> <strong>No Apparent Problem:</strong>
+            <div class="option-description">Moves in bed and in chair independently and has sufficient muscle strength to lift up completely during move; maintains good position in bed or chair at all times</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Braden Score Display -->
+      <div class="braden-score-display">
+        <h3>Total Braden Score</h3>
+        <div class="braden-total" id="bradenTotalDisplay">23</div>
+        
+        <div class="risk-visualization">
+          <div class="risk-segment" style="background: #c62828;" title="Very High Risk (6-9): Implement all preventive measures immediately">6-9</div>
+          <div class="risk-segment" style="background: #e65100;" title="High Risk (10-12): Implement comprehensive prevention protocol">10-12</div>
+          <div class="risk-segment" style="background: #f57f17;" title="Moderate Risk (13-14): Implement standard prevention measures">13-14</div>
+          <div class="risk-segment" style="background: #2e7d32;" title="Mild Risk (15-18): Monitor and implement basic prevention">15-18</div>
+          <div class="risk-segment" style="background: #558b2f;" title="No Risk (19-23): Continue routine care with monitoring">19-23</div>
+        </div>
+                <div id="bradenRiskCategory" class="risk-category none">
+          <i class="fas fa-shield-alt"></i> Risk Category: NO RISK
+        </div>
+        
+        <div id="bradenRecommendations" class="clinical-note" style="margin-top: 20px; text-align: left;">
+          <strong><i class="fas fa-lightbulb"></i> Recommended Interventions:</strong>
+          <div id="recommendationsList">
+            <p>Complete Braden Scale assessment to view personalized recommendations.</p>
+          </div>
+        </div>
+        
+        <input type="hidden" id="bradenScore" name="bradenScore" value="23">
+      </div>
+    </div>
+
+    <!-- Norton Scale Calculator -->
+    <div class="form-section norton-scale scale-section" id="nortonScaleSection">
+      <h2><i class="fas fa-balance-scale"></i> 2.2 Norton Scale Assessment (Interactive Calculator)</h2>
+      <div class="clinical-note">
+        <i class="fas fa-lightbulb"></i> <strong>Instructions:</strong> Select one option for each category. The total score will be automatically calculated and risk category displayed.
+      </div>
+      
+      <!-- Physical Condition -->
+      <div class="norton-subscale" id="physicalSubscale">
+        <h3><span class="tooltip">Physical Condition (1-4) <span class="tooltiptext">Overall physical health status</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectNortonOption('physical', 1, this)">
+            <span class="option-score">1</span> <strong>Very Bad:</strong>
+            <div class="option-description">Poor nutritional state, cachectic, pale, cold, clammy skin</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('physical', 2, this)">
+            <span class="option-score">2</span> <strong>Bad:</strong>
+            <div class="option-description">Fair nutritional state, pale, cool skin</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('physical', 3, this)">
+            <span class="option-score">3</span> <strong>Good:</strong>
+            <div class="option-description">Good nutritional state, warm, pink skin</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('physical', 4, this)">
+            <span class="option-score">4</span> <strong>Excellent:</strong>
+            <div class="option-description">Robust, excellent nutritional state, healthy skin</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Mental Condition -->
+      <div class="norton-subscale" id="mentalSubscale">
+        <h3><span class="tooltip">Mental Condition (1-4) <span class="tooltiptext">Level of alertness and cognitive function</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectNortonOption('mental', 1, this)">            <span class="option-score">1</span> <strong>Stupor:</strong>
+            <div class="option-description">Unresponsive to commands, minimal response to pain</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('mental', 2, this)">
+            <span class="option-score">2</span> <strong>Apathetic:</strong>
+            <div class="option-description">Minimal response to environment, withdrawn</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('mental', 3, this)">
+            <span class="option-score">3</span> <strong>Alert:</strong>
+            <div class="option-description">Responsive to environment, oriented</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('mental', 4, this)">
+            <span class="option-score">4</span> <strong>Comatose:</strong>
+            <div class="option-description">Completely unresponsive</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Activity -->
+      <div class="norton-subscale" id="nortonActivitySubscale">
+        <h3><span class="tooltip">Activity (1-4) <span class="tooltiptext">Degree of physical mobility</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectNortonOption('activity', 1, this)">
+            <span class="option-score">1</span> <strong>Bedridden:</strong>
+            <div class="option-description">Confined to bed</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('activity', 2, this)">
+            <span class="option-score">2</span> <strong>Chairbound:</strong>
+            <div class="option-description">Confined to chair or wheelchair</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('activity', 3, this)">
+            <span class="option-score">3</span> <strong>Walks with Help:</strong>
+            <div class="option-description">Walks with assistance or walker</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('activity', 4, this)">
+            <span class="option-score">4</span> <strong>Walks Alone:</strong>
+            <div class="option-description">Walks independently</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Mobility -->
+      <div class="norton-subscale" id="nortonMobilitySubscale">
+        <h3><span class="tooltip">Mobility (1-4) <span class="tooltiptext">Ability to change position</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectNortonOption('mobility', 1, this)">
+            <span class="option-score">1</span> <strong>Immobile:</strong>
+            <div class="option-description">Cannot move without assistance</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('mobility', 2, this)">            <span class="option-score">2</span> <strong>Very Limited:</strong>
+            <div class="option-description">Slight movement but cannot change position independently</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('mobility', 3, this)">
+            <span class="option-score">3</span> <strong>Slightly Limited:</strong>
+            <div class="option-description">Can change position with difficulty</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('mobility', 4, this)">
+            <span class="option-score">4</span> <strong>Full Mobility:</strong>
+            <div class="option-description">Moves easily and freely</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Incontinence -->
+      <div class="norton-subscale" id="incontinenceSubscale">
+        <h3><span class="tooltip">Incontinence (1-4) <span class="tooltiptext">Control over bladder and bowel</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectNortonOption('incontinence', 1, this)">
+            <span class="option-score">1</span> <strong>Urine & Stool:</strong>
+            <div class="option-description">Incontinent of both urine and stool</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('incontinence', 2, this)">
+            <span class="option-score">2</span> <strong>Urine or Stool:</strong>
+            <div class="option-description">Incontinent of either urine or stool</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('incontinence', 3, this)">
+            <span class="option-score">3</span> <strong>Occasional:</strong>
+            <div class="option-description">Occasional incontinence or needs bedpan</div>
+          </label>
+          <label class="scale-option" onclick="selectNortonOption('incontinence', 4, this)">
+            <span class="option-score">4</span> <strong>Continent:</strong>
+            <div class="option-description">Fully continent</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Norton Score Display -->
+      <div class="norton-score-display">
+        <h3>Total Norton Score</h3>
+        <div class="norton-total" id="nortonTotalDisplay">20</div>
+        
+        <div class="risk-visualization">
+          <div class="risk-segment" style="background: #c62828;" title="Very High Risk (≤9): Implement all preventive measures immediately">≤9</div>
+          <div class="risk-segment" style="background: #e65100;" title="High Risk (10-11): Implement comprehensive prevention protocol">10-11</div>
+          <div class="risk-segment" style="background: #f57f17;" title="Moderate Risk (12-13): Implement standard prevention measures">12-13</div>
+          <div class="risk-segment" style="background: #2e7d32;" title="Low Risk (14-15): Monitor and implement basic prevention">14-15</div>
+          <div class="risk-segment" style="background: #558b2f;" title="No Risk (16-20): Continue routine care with monitoring">16-20</div>
+        </div>
+                <div id="nortonRiskCategory" class="risk-category none">
+          <i class="fas fa-shield-alt"></i> Risk Category: NO RISK
+        </div>
+        
+        <div id="nortonRecommendations" class="clinical-note" style="margin-top: 20px; text-align: left;">
+          <strong><i class="fas fa-lightbulb"></i> Recommended Interventions:</strong>
+          <div id="nortonRecommendationsList">
+            <p>Complete Norton Scale assessment to view personalized recommendations.</p>
+          </div>
+        </div>
+        
+        <input type="hidden" id="nortonScore" name="nortonScore" value="20">
+      </div>
+    </div>
+
+    <!-- Waterlow Scale Calculator -->
+    <div class="form-section waterlow-scale scale-section" id="waterlowScaleSection">
+      <h2><i class="fas fa-weight"></i> 2.3 Waterlow Scale Assessment (Interactive Calculator)</h2>
+      <div class="clinical-note">
+        <i class="fas fa-lightbulb"></i> <strong>Instructions:</strong> Select one option for each category. The total score will be automatically calculated and risk category displayed.
+      </div>
+      
+      <!-- Build/Weight for Height -->
+      <div class="waterlow-subscale" id="buildSubscale">
+        <h3><span class="tooltip">Build/Weight for Height (1-3) <span class="tooltiptext">Body mass index assessment</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectWaterlowOption('build', 1, this)">
+            <span class="option-score">1</span> <strong>Underweight:</strong>
+            <div class="option-description">BMI < 18.5</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('build', 2, this)">
+            <span class="option-score">2</span> <strong>Normal:</strong>
+            <div class="option-description">BMI 18.5-24.9</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('build', 3, this)">
+            <span class="option-score">3</span> <strong>Obese:</strong>
+            <div class="option-description">BMI ≥ 30</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Skin Type/Visual Risk Areas -->
+      <div class="waterlow-subscale" id="skinSubscale">
+        <h3><span class="tooltip">Skin Type/Visual Risk Areas (1-4) <span class="tooltiptext">Skin condition and presence of risk areas</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectWaterlowOption('skin', 1, this)">
+            <span class="option-score">1</span> <strong>Healthy:</strong>
+            <div class="option-description">No visual risk areas</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('skin', 2, this)">            <span class="option-score">2</span> <strong>Dry:</strong>
+            <div class="option-description">Dry, flaky skin</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('skin', 3, this)">
+            <span class="option-score">3</span> <strong>Bruised:</strong>
+            <div class="option-description">Bruising present</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('skin', 4, this)">
+            <span class="option-score">4</span> <strong>Broken:</strong>
+            <div class="option-description">Broken skin or existing pressure ulcers</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Sex/Age -->
+      <div class="waterlow-subscale" id="sexAgeSubscale">
+        <h3><span class="tooltip">Sex/Age (1-5) <span class="tooltiptext">Biological sex and age factors</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectWaterlowOption('sexAge', 1, this)">
+            <span class="option-score">1</span> <strong>Male <64 / Female <75:</strong>
+            <div class="option-description">Younger adult</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('sexAge', 2, this)">
+            <span class="option-score">2</span> <strong>Male 65-74 / Female 75-80:</strong>
+            <div class="option-description">Older adult</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('sexAge', 3, this)">
+            <span class="option-score">3</span> <strong>Male 75-80 / Female 81-85:</strong>
+            <div class="option-description">Elderly</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('sexAge', 4, this)">
+            <span class="option-score">4</span> <strong>Male 81-85 / Female 86-90:</strong>
+            <div class="option-description">Advanced elderly</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('sexAge', 5, this)">
+            <span class="option-score">5</span> <strong>Male >85 / Female >90:</strong>
+            <div class="option-description">Very advanced age</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Continence -->
+      <div class="waterlow-subscale" id="continenceSubscale">
+        <h3><span class="tooltip">Continence (1-5) <span class="tooltiptext">Bladder and bowel control</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectWaterlowOption('continence', 1, this)">
+            <span class="option-score">1</span> <strong>Continent:</strong>
+            <div class="option-description">Fully continent</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('continence', 2, this)">            <span class="option-score">2</span> <strong>Occasional Urine:</strong>
+            <div class="option-description">Occasional urinary incontinence</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('continence', 3, this)">
+            <span class="option-score">3</span> <strong>Urinary Incontinence:</strong>
+            <div class="option-description">Frequent urinary incontinence</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('continence', 4, this)">
+            <span class="option-score">4</span> <strong>Fecal Incontinence:</strong>
+            <div class="option-description">Fecal incontinence</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('continence', 5, this)">
+            <span class="option-score">5</span> <strong>Dual Incontinence:</strong>
+            <div class="option-description">Both urinary and fecal incontinence</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Mobility -->
+      <div class="waterlow-subscale" id="waterlowMobilitySubscale">
+        <h3><span class="tooltip">Mobility (1-5) <span class="tooltiptext">Ability to move independently</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectWaterlowOption('mobility', 1, this)">
+            <span class="option-score">1</span> <strong>Fully Mobile:</strong>
+            <div class="option-description">Independent mobility</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('mobility', 2, this)">
+            <span class="option-score">2</span> <strong>Walks with Aid:</strong>
+            <div class="option-description">Uses walking aid</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('mobility', 3, this)">
+            <span class="option-score">3</span> <strong>Poor Mobility:</strong>
+            <div class="option-description">Limited mobility, requires assistance</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('mobility', 4, this)">
+            <span class="option-score">4</span> <strong>Immobile:</strong>
+            <div class="option-description">Confined to bed or chair</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('mobility', 5, this)">
+            <span class="option-score">5</span> <strong>Spinal Cord Injury:</strong>
+            <div class="option-description">Paraplegia or quadriplegia</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Appetite/Nutrition -->
+      <div class="waterlow-subscale" id="appetiteSubscale">
+        <h3><span class="tooltip">Appetite/Nutrition (1-3) <span class="tooltiptext">Nutritional intake and status</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectWaterlowOption('appetite', 1, this)">            <span class="option-score">1</span> <strong>Good:</strong>
+            <div class="option-description">Good appetite, eats well</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('appetite', 2, this)">
+            <span class="option-score">2</span> <strong>Poor:</strong>
+            <div class="option-description">Poor appetite, eats poorly</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('appetite', 3, this)">
+            <span class="option-score">3</span> <strong>Nil by Mouth:</strong>
+            <div class="option-description">Receiving nutrition via tube or IV</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Neurological Deficit -->
+      <div class="waterlow-subscale" id="neurologicalSubscale">
+        <h3><span class="tooltip">Neurological Deficit (1-4) <span class="tooltiptext">Neurological conditions affecting sensation</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectWaterlowOption('neurological', 1, this)">
+            <span class="option-score">1</span> <strong>None:</strong>
+            <div class="option-description">No neurological deficit</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('neurological', 2, this)">
+            <span class="option-score">2</span> <strong>Mild:</strong>
+            <div class="option-description">Mild sensory impairment</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('neurological', 3, this)">
+            <span class="option-score">3</span> <strong>Moderate:</strong>
+            <div class="option-description">Moderate sensory impairment</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('neurological', 4, this)">
+            <span class="option-score">4</span> <strong>Severe:</strong>
+            <div class="option-description">Severe sensory impairment (e.g., spinal cord injury)</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Additional Risk Factors -->
+      <div class="waterlow-subscale" id="additionalSubscale">
+        <h3><span class="tooltip">Additional Risk Factors (0-4) <span class="tooltiptext">Other medical conditions increasing risk</span></span></h3>
+        <div class="scale-options">
+          <label class="scale-option" onclick="selectWaterlowOption('additional', 0, this)">
+            <span class="option-score">0</span> <strong>None:</strong>
+            <div class="option-description">No additional risk factors</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('additional', 1, this)">
+            <span class="option-score">1</span> <strong>One Factor:</strong>
+            <div class="option-description">e.g., diabetes, vascular disease</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('additional', 2, this)">            <span class="option-score">2</span> <strong>Two Factors:</strong>
+            <div class="option-description">e.g., diabetes + vascular disease</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('additional', 3, this)">
+            <span class="option-score">3</span> <strong>Three Factors:</strong>
+            <div class="option-description">Multiple comorbidities</div>
+          </label>
+          <label class="scale-option" onclick="selectWaterlowOption('additional', 4, this)">
+            <span class="option-score">4</span> <strong>Four+ Factors:</strong>
+            <div class="option-description">Complex medical history</div>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Waterlow Score Display -->
+      <div class="waterlow-score-display">
+        <h3>Total Waterlow Score</h3>
+        <div class="waterlow-total" id="waterlowTotalDisplay">10</div>
+        
+        <div class="risk-visualization">
+          <div class="risk-segment" style="background: #c62828;" title="Very High Risk (>20): Implement all preventive measures immediately">>20</div>
+          <div class="risk-segment" style="background: #e65100;" title="High Risk (15-20): Implement comprehensive prevention protocol">15-20</div>
+          <div class="risk-segment" style="background: #f57f17;" title="Medium Risk (10-14): Implement standard prevention measures">10-14</div>
+          <div class="risk-segment" style="background: #2e7d32;" title="At Risk (≤9): Monitor and implement basic prevention">≤9</div>
+        </div>
+        
+        <div id="waterlowRiskCategory" class="risk-category mild">
+          <i class="fas fa-exclamation-circle"></i> Risk Category: AT RISK
+        </div>
+        
+        <div id="waterlowRecommendations" class="clinical-note" style="margin-top: 20px; text-align: left;">
+          <strong><i class="fas fa-lightbulb"></i> Recommended Interventions:</strong>
+          <div id="waterlowRecommendationsList">
+            <p>Complete Waterlow Scale assessment to view personalized recommendations.</p>
+          </div>
+        </div>
+        
+        <input type="hidden" id="waterlowScore" name="waterlowScore" value="10">
+      </div>
+    </div>
+
+    <!-- Skin Inspection -->
+    <div class="form-section">
+      <h2><i class="fas fa-search"></i> 3. General Skin Inspection</h2>
+      
+      <label>Overall Skin Condition:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="skinCondition" value="intact"> <i class="fas fa-check-circle"></i> Intact</label>
+        <label><input type="radio" name="skinCondition" value="dry"> <i class="fas fa-sun"></i> Dry/Flaky</label>
+        <label><input type="radio" name="skinCondition" value="macerated"> <i class="fas fa-tint"></i> Macerated</label>        <label><input type="radio" name="skinCondition" value="erythema"> <i class="fas fa-exclamation-triangle"></i> Erythema Present</label>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+        <div>
+          <label for="skinMoisture">Skin Moisture Level:</label>
+          <select id="skinMoisture" name="skinMoisture">
+            <option value="">-- Select --</option>
+            <option value="dry">Dry</option>
+            <option value="normal">Normal</option>
+            <option value="moist">Moist</option>
+            <option value="wet">Excessively Wet</option>
+          </select>
+        </div>
+        <div>
+          <label for="skinTurgor">Skin Turgor:</label>
+          <select id="skinTurgor" name="skinTurgor">
+            <option value="">-- Select --</option>
+            <option value="good">Good (< 2 seconds)</option>
+            <option value="fair">Fair (2-4 seconds)</option>
+            <option value="poor">Poor (> 4 seconds)</option>
+          </select>
+        </div>
+        <div>
+          <label for="skinTemp">Skin Temperature:</label>
+          <select id="skinTemp" name="skinTemp">
+            <option value="">-- Select --</option>
+            <option value="cool">Cool</option>
+            <option value="warm">Warm</option>
+            <option value="hot">Hot</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ulcers Section -->
+    <div class="form-section">
+      <h2><i class="fas fa-first-aid"></i> 4. Pressure Ulcer Details</h2>
+      <button type="button" id="addUlcerBtn"><i class="fas fa-plus-circle"></i> Add Another Ulcer</button>
+      <div class="clinical-note">
+        <i class="fas fa-info-circle"></i> Document each pressure ulcer separately. Use the duplicate button for ulcers with similar characteristics.
+      </div>
+      
+      <div id="ulcersContainer">
+        <!-- Initial Ulcer Entry -->
+        <div class="ulcer-entry" data-ulcer-index="0">
+          <div class="ulcer-header">
+            <strong><i class="fas fa-wound"></i> Ulcer #<span class="ulcer-index">1</span></strong>
+            <div class="ulcer-actions">
+              <button type="button" class="duplicate-ulcer"><i class="fas fa-copy"></i> Duplicate</button>              <button type="button" class="remove-ulcer"><i class="fas fa-trash"></i> Remove</button>
+            </div>
+          </div>
+          
+          <label><i class="fas fa-map-marker-alt"></i> Location (Be specific):</label>
+          <textarea name="ulcerLocation[]" rows="2" placeholder="e.g., 2 cm left of sacrum midline, right heel posterior surface"></textarea>
+          
+          <label><i class="fas fa-layer-group"></i> Stage:</label>
+          <select name="stage[]" class="stage-select">
+            <option value="">-- Select Stage --</option>
+            <option value="stage1">Stage 1: Non-blanchable erythema</option>
+            <option value="stage2">Stage 2: Partial thickness loss</option>
+            <option value="stage3">Stage 3: Full thickness loss</option>
+            <option value="stage4">Stage 4: Full thickness loss with tissue destruction</option>
+            <option value="unstageable">Unstageable: Covered by slough/eschar</option>
+            <option value="dti">Deep Tissue Injury (DTI)</option>
+          </select>
+          
+          <!-- Dimensions -->
+          <fieldset>
+            <legend><i class="fas fa-ruler-combined"></i> Dimensions (cm)</legend>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+              <div>
+                <label>Length (longest dimension):</label>
+                <input type="number" step="0.1" name="length[]" placeholder="e.g., 4.5" min="0" class="dimension-input">
+              </div>
+              <div>
+                <label>Width (perpendicular to length):</label>
+                <input type="number" step="0.1" name="width[]" placeholder="e.g., 3.0" min="0" class="dimension-input">
+              </div>
+              <div>
+                <label>Depth (maximum depth):</label>
+                <input type="number" step="0.1" name="depth[]" placeholder="e.g., 0.8" min="0" class="depth-input">
+              </div>
+            </div>
+            <div class="wound-area-display">
+              <i class="fas fa-calculator"></i> Wound Area: <span class="area">0.0</span> cm²
+            </div>
+          </fieldset>
+          
+          <!-- Wound Bed Tissue -->
+          <fieldset>
+            <legend><i class="fas fa-microscope"></i> Wound Bed Tissue (%)</legend>
+            <p class="clinical-note"><i class="fas fa-exclamation-triangle"></i> Total should not exceed 100%</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+              <div>
+                <label>Granulation (%):</label>
+                <input type="number" min="0" max="100" name="granulation[]" class="tissue-input" placeholder="0-100">
+                <span class="error" id="granulationError_0"></span>              </div>
+              <div>
+                <label>Slough (%):</label>
+                <input type="number" min="0" max="100" name="slough[]" class="tissue-input" placeholder="0-100">
+                <span class="error" id="sloughError_0"></span>
+              </div>
+              <div>
+                <label>Eschar (%):</label>
+                <input type="number" min="0" max="100" name="eschar[]" class="tissue-input" placeholder="0-100">
+                <span class="error" id="escharError_0"></span>
+              </div>
+              <div>
+                <label>Necrosis (%):</label>
+                <input type="number" min="0" max="100" name="necrosis[]" class="tissue-input" placeholder="0-100">
+                <span class="error" id="necrosisError_0"></span>
+              </div>
+            </div>
+          </fieldset>
+          
+          <!-- Enhanced Exudate Assessment -->
+          <fieldset>
+            <legend><i class="fas fa-tint"></i> Exudate Characteristics (Comprehensive)</legend>
+            
+            <div class="exudate-grid">
+              <div class="exudate-item">
+                <label>Amount:</label>
+                <div class="radio-group">
+                  <label><input type="radio" name="exudateAmount_0" value="none"> None</label>
+                  <label><input type="radio" name="exudateAmount_0" value="scant"> Scant</label>
+                  <label><input type="radio" name="exudateAmount_0" value="moderate"> Moderate</label>
+                  <label><input type="radio" name="exudateAmount_0" value="heavy"> Heavy</label>
+                </div>
+              </div>
+              
+              <div class="exudate-item">
+                <label>Type:</label>
+                <div class="radio-group">
+                  <label><input type="radio" name="exudateType_0" value="serous"> Serous</label>
+                  <label><input type="radio" name="exudateType_0" value="serosanguinous"> Serosanguinous</label>
+                  <label><input type="radio" name="exudateType_0" value="sanguinous"> Sanguinous</label>
+                  <label><input type="radio" name="exudateType_0" value="purulent"> Purulent</label>
+                </div>
+              </div>
+              
+              <div class="exudate-item">
+                <label>Consistency:</label>
+                <select name="exudateConsistency_0">
+                  <option value="">-- Select --</option>
+                  <option value="thin">Thin/Watery</option>
+                  <option value="serous">Serous</option>                  <option value="thick">Thick/Purulent</option>
+                  <option value="gelatinous">Gelatinous</option>
+                  <option value="fibrous">Fibrous</option>
+                </select>
+              </div>
+              
+              <div class="exudate-item">
+                <label>Odour Intensity:</label>
+                <div class="scale-radio">
+                  <label><input type="radio" name="exudateOdour_0" value="0"> 0: None</label>
+                  <label><input type="radio" name="exudateOdour_0" value="1"> 1: Mild (detected close)</label>
+                  <label><input type="radio" name="exudateOdour_0" value="2"> 2: Moderate (detected in room)</label>
+                  <label><input type="radio" name="exudateOdour_0" value="3"> 3: Strong/Foul (detected on entering)</label>
+                </div>
+              </div>
+            </div>
+            
+            <label>Color/Appearance:</label>
+            <input type="text" name="exudateColor_0" placeholder="e.g., Clear yellow, thick green, brownish-red">
+            
+            <div style="margin-top: 15px;">
+              <label>pH (if measured):</label>
+              <input type="number" step="0.1" min="4" max="9" name="exudatePH_0" placeholder="e.g., 6.5" style="width: 120px;">
+            </div>
+          </fieldset>
+          
+          <!-- Wound Base Characterization -->
+          <fieldset>
+            <legend><i class="fas fa-palette"></i> Wound Base/Floor Characterization</legend>
+            
+            <label>Color Distribution:</label>
+            <div class="color-options">
+              <label class="color-option" onclick="toggleColorOption(this)">
+                <input type="checkbox" name="woundColor_0[]" value="red" hidden>
+                <span class="color-dot" style="background:#e74c3c"></span>
+                Red (≥95% granulation)
+              </label>
+              <label class="color-option" onclick="toggleColorOption(this)">
+                <input type="checkbox" name="woundColor_0[]" value="pink" hidden>
+                <span class="color-dot" style="background:#f1948a"></span>
+                Pink (75-94% granulation)
+              </label>
+              <label class="color-option" onclick="toggleColorOption(this)">
+                <input type="checkbox" name="woundColor_0[]" value="yellow" hidden>
+                <span class="color-dot" style="background:#f1c40f"></span>
+                Yellow (slough present)
+              </label>
+              <label class="color-option" onclick="toggleColorOption(this)">
+                <input type="checkbox" name="woundColor_0[]" value="black" hidden>
+                <span class="color-dot" style="background:#2c3e50"></span>                Black (eschar/necrosis)
+              </label>
+              <label class="color-option" onclick="toggleColorOption(this)">
+                <input type="checkbox" name="woundColor_0[]" value="mixed" hidden>
+                <span class="color-dot" style="background:linear-gradient(45deg, #e74c3c 25%, #f1c40f 25%, #f1c40f 50%, #2c3e50 50%, #2c3e50 75%, #f1948a 75%)"></span>
+                Mixed
+              </label>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+              <div>
+                <label>Texture:</label>
+                <select name="woundTexture_0">
+                  <option value="">-- Select --</option>
+                  <option value="moist">Moist</option>
+                  <option value="dry">Dry</option>
+                  <option value="soggy">Soggy</option>
+                  <option value="leathery">Leathery</option>
+                  <option value="friable">Friable</option>
+                </select>
+              </div>
+              
+              <div>
+                <label>Adherence:</label>
+                <select name="woundAdherence_0">
+                  <option value="">-- Select --</option>
+                  <option value="loose">Loose</option>
+                  <option value="adherent">Adherent</option>
+                  <option value="firm">Firmly Attached</option>
+                </select>
+              </div>
+              
+              <div>
+                <label>Bleeding Tendency:</label>
+                <select name="woundBleeding_0">
+                  <option value="">-- Select --</option>
+                  <option value="none">None</option>
+                  <option value="minimal">Minimal (on contact)</option>
+                  <option value="moderate">Moderate (on manipulation)</option>
+                  <option value="spontaneous">Spontaneous</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+          
+          <!-- Periwound Skin -->
+          <fieldset>
+            <legend><i class="fas fa-expand"></i> Periwound Skin (2-4 cm around wound)</legend>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="periwound_0[]" value="intact"> Intact</label>              <label><input type="checkbox" name="periwound_0[]" value="erythema"> Erythema</label>
+              <label><input type="checkbox" name="periwound_0[]" value="macerated"> Macerated</label>
+              <label><input type="checkbox" name="periwound_0[]" value="edematous"> Edematous</label>
+              <label><input type="checkbox" name="periwound_0[]" value="indurated"> Indurated</label>
+              <label><input type="checkbox" name="periwound_0[]" value="excoriated"> Excoriated</label>
+            </div>
+          </fieldset>
+          
+          <!-- Edge Condition -->
+          <fieldset>
+            <legend><i class="fas fa-border-style"></i> Edge Condition</legend>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="edge_0[]" value="attached"> Attached</label>
+              <label><input type="checkbox" name="edge_0[]" value="epibole"> Epibole (Rolled Edge)</label>
+              <label><input type="checkbox" name="edge_0[]" value="fibrotic"> Fibrotic</label>
+              <label><input type="checkbox" name="edge_0[]" value="undermined"> Undermined</label>
+            </div>
+            
+            <label>Undermining/Tunneling:</label>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px;">
+              <input type="number" step="0.1" name="underminingDepth_0" placeholder="Depth (cm)" style="flex: 1;">
+              <input type="text" name="underminingClock_0" placeholder="Clock position (e.g., 2–4 o'clock)" style="flex: 2;">
+            </div>
+            
+            <div style="margin-top: 15px;">
+              <label>Sinus Tracts Present:</label>
+              <div class="radio-group">
+                <label><input type="radio" name="sinusTracts_0" value="yes"> Yes</label>
+                <label><input type="radio" name="sinusTracts_0" value="no"> No</label>
+              </div>
+              <div id="sinusDetails_0" style="display: none; margin-top: 10px;">
+                <label>Number of Sinus Tracts:</label>
+                <input type="number" name="sinusCount_0" min="1" placeholder="e.g., 2">
+                <label>Maximum Depth (cm):</label>
+                <input type="number" step="0.1" name="sinusDepth_0" placeholder="e.g., 3.5">
+              </div>
+            </div>
+          </fieldset>
+          
+          <!-- Pain Assessment -->
+          <fieldset>
+            <legend><i class="fas fa-heartbeat"></i> Pain Assessment</legend>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+              <div>
+                <label>Pain at rest (0-10):</label>
+                <input type="number" min="0" max="10" name="painRest_0" placeholder="0-10">
+              </div>
+              <div>
+                <label>Pain during dressing change (0-10):</label>
+                <input type="number" min="0" max="10" name="painDressing_0" placeholder="0-10">              </div>
+            </div>
+            
+            <label>Pain characteristics:</label>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="painChar_0[]" value="burning"> Burning</label>
+              <label><input type="checkbox" name="painChar_0[]" value="throbbing"> Throbbing</label>
+              <label><input type="checkbox" name="painChar_0[]" value="sharp"> Sharp</label>
+              <label><input type="checkbox" name="painChar_0[]" value="aching"> Aching</label>
+              <label><input type="checkbox" name="painChar_0[]" value="stabbing"> Stabbing</label>
+              <label><input type="checkbox" name="painChar_0[]" value="itching"> Itching</label>
+            </div>
+          </fieldset>
+          
+          <!-- Bates-Jensen Wound Assessment Tool -->
+          <div class="bates-jensen-tool">
+            <h3><i class="fas fa-clipboard-list"></i> Bates-Jensen Wound Assessment Tool</h3>
+            
+            <table class="bates-jensen-table">
+              <thead>
+                <tr>
+                  <th>Assessment Parameter</th>
+                  <th>Score</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Size</td>
+                  <td>
+                    <select class="bates-select" data-param="size">
+                      <option value="1">1 - Very small (≤1cm²)</option>
+                      <option value="2">2 - Small (1-10cm²)</option>
+                      <option value="3">3 - Medium (10-25cm²)</option>
+                      <option value="4">4 - Large (25-100cm²)</option>
+                      <option value="5">5 - Very large (>100cm²)</option>
+                    </select>
+                  </td>
+                  <td>Surface area of wound</td>
+                </tr>
+                <tr>
+                  <td>Depth</td>
+                  <td>
+                    <select class="bates-select" data-param="depth">
+                      <option value="1">1 - Superficial</option>
+                      <option value="2">2 - Partial thickness</option>
+                      <option value="3">3 - Full thickness</option>
+                      <option value="4">4 - Extends to muscle</option>
+                      <option value="5">5 - Extends to bone</option>
+                    </select>                  </td>
+                  <td>Depth of tissue involvement</td>
+                </tr>
+                <tr>
+                  <td>Edges</td>
+                  <td>
+                    <select class="bates-select" data-param="edges">
+                      <option value="1">1 - Attached</option>
+                      <option value="2">2 - Separated <0.5cm</option>
+                      <option value="3">3 - Separated 0.5-1cm</option>
+                      <option value="4">4 - Separated 1-2cm</option>
+                      <option value="5">5 - Separated >2cm</option>
+                    </select>
+                  </td>
+                  <td>Separation of wound edges</td>
+                </tr>
+                <tr>
+                  <td>Undermining</td>
+                  <td>
+                    <select class="bates-select" data-param="undermining">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - Present <0.5cm</option>
+                      <option value="3">3 - Present 0.5-1cm</option>
+                      <option value="4">4 - Present 1-2cm</option>
+                      <option value="5">5 - Present >2cm</option>
+                    </select>
+                  </td>
+                  <td>Presence of undermining</td>
+                </tr>
+                <tr>
+                  <td>Necrotic Tissue Type</td>
+                  <td>
+                    <select class="bates-select" data-param="necrotic">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - Slough</option>
+                      <option value="3">3 - Eschar</option>
+                      <option value="4">4 - Both slough & eschar</option>
+                      <option value="5">5 - Thick eschar</option>
+                    </select>
+                  </td>
+                  <td>Type of necrotic tissue</td>
+                </tr>
+                <tr>
+                  <td>Necrotic Tissue Amount</td>
+                  <td>
+                    <select class="bates-select" data-param="necroticAmount">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - <25%</option>
+                      <option value="3">3 - 25-50%</option>
+                      <option value="4">4 - 51-75%</option>                      <option value="5">5 - >75%</option>
+                    </select>
+                  </td>
+                  <td>Percentage of wound covered</td>
+                </tr>
+                <tr>
+                  <td>Exudate Type</td>
+                  <td>
+                    <select class="bates-select" data-param="exudateType">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - Serous</option>
+                      <option value="3">3 - Serosanguinous</option>
+                      <option value="4">4 - Sanguinous</option>
+                      <option value="5">5 - Purulent</option>
+                    </select>
+                  </td>
+                  <td>Type of wound drainage</td>
+                </tr>
+                <tr>
+                  <td>Exudate Amount</td>
+                  <td>
+                    <select class="bates-select" data-param="exudateAmount">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - Scant</option>
+                      <option value="3">3 - Small</option>
+                      <option value="4">4 - Moderate</option>
+                      <option value="5">5 - Large</option>
+                    </select>
+                  </td>
+                  <td>Amount of wound drainage</td>
+                </tr>
+                <tr>
+                  <td>Skin Color Around Wound</td>
+                  <td>
+                    <select class="bates-select" data-param="skinColor">
+                      <option value="1">1 - Normal</option>
+                      <option value="2">2 - Pink</option>
+                      <option value="3">3 - Red</option>
+                      <option value="4">4 - Dark red</option>
+                      <option value="5">5 - Purple/black</option>
+                    </select>
+                  </td>
+                  <td>Color of periwound skin</td>
+                </tr>
+                <tr>
+                  <td>Peripheral Tissue Edema</td>
+                  <td>
+                    <select class="bates-select" data-param="edema">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - Trace</option>                      <option value="3">3 - +1</option>
+                      <option value="4">4 - +2</option>
+                      <option value="5">5 - +3</option>
+                    </select>
+                  </td>
+                  <td>Edema in periwound tissue</td>
+                </tr>
+                <tr>
+                  <td>Peripheral Tissue Induration</td>
+                  <td>
+                    <select class="bates-select" data-param="induration">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - Trace</option>
+                      <option value="3">3 - +1</option>
+                      <option value="4">4 - +2</option>
+                      <option value="5">5 - +3</option>
+                    </select>
+                  </td>
+                  <td>Induration in periwound tissue</td>
+                </tr>
+                <tr>
+                  <td>Granulation Tissue Type</td>
+                  <td>
+                    <select class="bates-select" data-param="granulation">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - Pale</option>
+                      <option value="3">3 - Pink</option>
+                      <option value="4">4 - Beefy red</option>
+                      <option value="5">5 - Bleeds easily</option>
+                    </select>
+                  </td>
+                  <td>Type of granulation tissue</td>
+                </tr>
+                <tr>
+                  <td>Epithelialization</td>
+                  <td>
+                    <select class="bates-select" data-param="epithelialization">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - Trace</option>
+                      <option value="3">3 - <25%</option>
+                      <option value="4">4 - 25-50%</option>
+                      <option value="5">5 - >50%</option>
+                    </select>
+                  </td>
+                  <td>Presence of epithelial tissue</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2"><strong>Total Bates-Jensen Score:</strong></td>                  <td><span id="batesJensenTotal_0">13</span>/65</td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <div id="batesJensenRiskCategory_0" class="risk-category mild">
+                      <i class="fas fa-exclamation-circle"></i> Wound Status: MODERATE IMPAIRMENT (26-39)
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+            
+            <div style="margin-top: 20px;">
+              <label>Temperature (°C):</label>
+              <input type="number" step="0.1" min="35" max="42" name="temperature_0" placeholder="e.g., 37.2" style="width: 120px;">
+              
+              <label style="margin-left: 20px;">Heart Rate (bpm):</label>
+              <input type="number" min="40" max="200" name="heartRate_0" placeholder="e.g., 78" style="width: 120px;">
+            </div>
+            
+            <div style="margin-top: 15px;">
+              <label>Wound Culture (if done):</label>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <input type="date" name="cultureDate_0" placeholder="Date" style="flex: 1;">
+                <input type="text" name="cultureResult_0" placeholder="Result & Organism" style="flex: 2;">
+              </div>
+            </div>
+          </div>
+          
+          <!-- Additional Documentation -->
+          <fieldset>
+            <legend><i class="fas fa-camera"></i> Additional Documentation</legend>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="photoTaken_0" value="yes"> <i class="fas fa-camera"></i> Photograph Taken</label>
+              <label><input type="checkbox" name="photoConsent_0" value="yes"> <i class="fas fa-file-signature"></i> Consent Obtained</label>
+              <label><input type="checkbox" name="woundTrace_0" value="yes"> <i class="fas fa-draw-polygon"></i> Wound Tracing Done</label>
+            </div>
+            
+            <label>Additional Notes:</label>
+            <textarea name="ulcerNotes_0" rows="3" placeholder="Any additional observations, changes since last assessment, patient concerns..."></textarea>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prevention & Management Plan -->
+    <div class="form-section">
+      <h2><i class="fas fa-tasks"></i> 5. Prevention & Management Plan</h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">        <div>
+          <label>Repositioning Schedule:</label>
+          <select name="repositioning">
+            <option value="">-- Select --</option>
+            <option value="1-hourly">1-hourly</option>
+            <option value="2-hourly">2-hourly</option>
+            <option value="3-hourly">3-hourly</option>
+            <option value="4-hourly">4-hourly</option>
+            <option value="prn">As needed (PRN)</option>
+          </select>
+        </div>
+        
+        <div>
+          <label>30° Lateral Tilt:</label>
+          <select name="lateralTilt">
+            <option value="">-- Select --</option>
+            <option value="yes">Yes, implemented</option>
+            <option value="no">No</option>
+            <option value="contraindicated">Contraindicated</option>
+          </select>
+        </div>
+      </div>
+      
+      <label>Pressure-Relieving Devices:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="devices[]" value="air"> <i class="fas fa-wind"></i> Air Mattress (Alternating)</label>
+        <label><input type="checkbox" name="devices[]" value="foam"> <i class="fas fa-cube"></i> High-Spec Foam Mattress</label>
+        <label><input type="checkbox" name="devices[]" value="heel"> <i class="fas fa-shoe-prints"></i> Heel Protectors</label>
+        <label><input type="checkbox" name="devices[]" value="cushion"> <i class="fas fa-chair"></i> Pressure-Relieving Cushion</label>
+        <label><input type="checkbox" name="devices[]" value="bridging"> <i class="fas fa-archway"></i> Bridging Devices</label>
+        <label><input type="checkbox" name="devices[]" value="other"> <i class="fas fa-plus"></i> Other: <input type="text" name="deviceOther" placeholder="Specify" style="width:150px;"></label>
+      </div>
+      
+      <label>Skin Care Protocol:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="skincare[]" value="barrier"> <i class="fas fa-shield-alt"></i> Barrier Cream</label>
+        <label><input type="checkbox" name="skincare[]" value="moisturizer"> <i class="fas fa-tint"></i> Moisturizer</label>
+        <label><input type="checkbox" name="skincare[]" value="cleanser"> <i class="fas fa-pump-soap"></i> pH-Balanced Cleanser</label>
+        <label><input type="checkbox" name="skincare[]" value="incontinence"> <i class="fas fa-toilet-paper"></i> Incontinence Management</label>
+        <label><input type="checkbox" name="skincare[]" value="massage"> <i class="fas fa-hands"></i> Gentle Massage (bony prominences)</label>
+      </div>
+      
+      <fieldset>
+        <legend><i class="fas fa-utensils"></i> Nutritional Support</legend>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="nutrition[]" value="highProtein"> <i class="fas fa-drumstick-bite"></i> High Protein Diet (1.2-1.5g/kg/day)</label>
+          <label><input type="checkbox" name="nutrition[]" value="supplements"> <i class="fas fa-pills"></i> Nutritional Supplements</label>
+          <label><input type="checkbox" name="nutrition[]" value="vitamins"> <i class="fas fa-apple-alt"></i> Vitamin C & Zinc Supplementation</label>
+          <label><input type="checkbox" name="nutrition[]" value="hydration"> <i class="fas fa-tint"></i> Adequate Hydration (30-35mL/kg/day)</label>
+          <label><input type="checkbox" name="nutrition[]" value="monitoring"> <i class="fas fa-chart-line"></i> Weekly Weight Monitoring</label>        </div>
+        
+        <label>Dietician Referral:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="dieticianReferral" value="yes"> <i class="fas fa-check"></i> Yes</label>
+          <label><input type="radio" name="dieticianReferral" value="no"> <i class="fas fa-times"></i> No</label>
+          <label><input type="radio" name="dieticianReferral" value="pending"> <i class="fas fa-clock"></i> Pending</label>
+        </div>
+      </fieldset>
+      
+      <fieldset>
+        <legend><i class="fas fa-band-aid"></i> Wound Care Plan</legend>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+          <div>
+            <label>Primary Dressing Type:</label>
+            <select name="primaryDressing">
+              <option value="">-- Select --</option>
+              <option value="hydrocolloid">Hydrocolloid</option>
+              <option value="alginate">Alginate</option>
+              <option value="foam">Foam</option>
+              <option value="hydrogel">Hydrogel</option>
+              <option value="gauze">Gauze</option>
+              <option value="silver">Silver-Impregnated</option>
+              <option value="iodine">Iodine-Based</option>
+              <option value="collagen">Collagen Matrix</option>
+            </select>
+          </div>
+          
+          <div>
+            <label>Secondary Dressing:</label>
+            <select name="secondaryDressing">
+              <option value="">-- Select --</option>
+              <option value="film">Transparent Film</option>
+              <option value="pad">Absorbent Pad</option>
+              <option value="bandage">Conforming Bandage</option>
+              <option value="tape">Surgical Tape</option>
+              <option value="net">Tubular Net</option>
+              <option value="none">None</option>
+            </select>
+          </div>
+          
+          <div>
+            <label>Frequency of Dressing Change:</label>
+            <select name="dressingFrequency">
+              <option value="">-- Select --</option>
+              <option value="daily">Daily</option>
+              <option value="48h">Every 48 hours</option>
+              <option value="72h">Every 72 hours</option>
+              <option value="weekly">Weekly</option>              <option value="prn">PRN (as needed)</option>
+            </select>
+          </div>
+        </div>
+        
+        <label>Wound Cleansing Solution:</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="cleansing[]" value="saline"> Normal Saline</label>
+          <label><input type="checkbox" name="cleansing[]" value="antiseptic"> Antiseptic Solution</label>
+          <label><input type="checkbox" name="cleansing[]" value="surfactant"> Surfactant-based</label>
+          <label><input type="checkbox" name="cleansing[]" value="other"> Other: <input type="text" name="cleansingOther" placeholder="Specify" style="width:150px;"></label>
+        </div>
+        
+        <label>Debridement Required:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="debridement" value="autolytic"> Autolytic</label>
+          <label><input type="radio" name="debridement" value="sharp"> Sharp/Surgical</label>
+          <label><input type="radio" name="debridement" value="enzymatic"> Enzymatic</label>
+          <label><input type="radio" name="debridement" value="mechanical"> Mechanical</label>
+          <label><input type="radio" name="debridement" value="biological"> Biological</label>
+          <label><input type="radio" name="debridement" value="none"> None</label>
+        </div>
+        
+        <div style="margin-top: 15px;">
+          <label>Pain Management Before Dressing Change:</label>
+          <input type="text" name="painManagement" placeholder="e.g., Paracetamol 1g 30min prior, topical lidocaine">
+        </div>
+      </fieldset>
+      
+      <label>Referrals:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="referrals[]" value="woundNurse"> <i class="fas fa-user-nurse"></i> Wound Care Nurse</label>
+        <label><input type="checkbox" name="referrals[]" value="surgeon"> <i class="fas fa-user-md"></i> Surgeon</label>
+        <label><input type="checkbox" name="referrals[]" value="physician"> <i class="fas fa-stethoscope"></i> Physician</label>
+        <label><input type="checkbox" name="referrals[]" value="dietician"> <i class="fas fa-utensils"></i> Dietician</label>
+        <label><input type="checkbox" name="referrals[]" value="physiotherapist"> <i class="fas fa-walking"></i> Physiotherapist</label>
+        <label><input type="checkbox" name="referrals[]" value="social"> <i class="fas fa-hands-helping"></i> Social Worker</label>
+        <label><input type="checkbox" name="referrals[]" value="painTeam"> <i class="fas fa-pills"></i> Pain Management Team</label>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+        <div>
+          <label>Next Assessment Date:</label>
+          <input type="date" name="nextAssessment">
+        </div>
+        <div>
+          <label>Follow-up Wound Review:</label>
+          <select name="followUpFrequency">
+            <option value="">-- Select --</option>
+            <option value="daily">Daily</option>            <option value="2-3days">Every 2-3 days</option>
+            <option value="weekly">Weekly</option>
+            <option value="2weekly">Every 2 weeks</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
+      </div>
+      
+      <label>Patient/Family Education Provided:</label>
+      <textarea name="education" rows="4" placeholder="Topics covered: pressure relief techniques, nutrition importance, skin inspection, signs of infection, dressing care, when to seek help..."></textarea>
+    </div>
+
+    <!-- Assessment Summary -->
+    <div class="form-section">
+      <h2><i class="fas fa-clipboard-list"></i> 6. Assessment Summary & Clinical Decision Support</h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div>
+          <label>Overall Risk Status:</label>
+          <div class="radio-group">
+            <label><input type="radio" name="overallRisk" value="low"> <span class="risk-indicator" style="background:#2e7d32"></span> Low Risk</label>
+            <label><input type="radio" name="overallRisk" value="moderate"> <span class="risk-indicator" style="background:#f57f17"></span> Moderate Risk</label>
+            <label><input type="radio" name="overallRisk" value="high"> <span class="risk-indicator" style="background:#e65100"></span> High Risk</label>
+            <label><input type="radio" name="overallRisk" value="veryHigh"> <span class="risk-indicator" style="background:#c62828"></span> Very High Risk</label>
+          </div>
+        </div>
+        
+        <div>
+          <label>Intervention Priority:</label>
+          <div class="radio-group">
+            <label><input type="radio" name="priority" value="routine"> <i class="fas fa-calendar-day"></i> Routine</label>
+            <label><input type="radio" name="priority" value="urgent"> <i class="fas fa-exclamation-circle"></i> Urgent</label>
+            <label><input type="radio" name="priority" value="emergent"> <i class="fas fa-ambulance"></i> Emergent</label>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top: 20px;">
+        <label>Overall Prognosis:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="prognosis" value="good"> <i class="fas fa-smile"></i> Good - Expected to heal with current plan</label>
+          <label><input type="radio" name="prognosis" value="fair"> <i class="fas fa-meh"></i> Fair - May heal with modified interventions</label>
+          <label><input type="radio" name="prognosis" value="poor"> <i class="fas fa-frown"></i> Poor - Unlikely to heal with current approach</label>
+          <label><input type="radio" name="prognosis" value="deteriorating"> <i class="fas fa-arrow-down"></i> Deteriorating - Getting worse despite care</label>
+        </div>
+      </div>
+      
+      <fieldset>
+        <legend><i class="fas fa-robot"></i> Auto-Generated Recommendations</legend>
+        <div id="autoRecommendations" class="clinical-note" style="text-align: left;">          <p><i class="fas fa-sync-alt"></i> <strong>Recommendations will appear here after completing the risk assessment and ulcer details.</strong></p>
+          <p>Based on your input, the system will provide evidence-based recommendations for:</p>
+          <ul>
+            <li>Pressure redistribution strategies</li>
+            <li>Skin care interventions</li>
+            <li>Nutritional optimization</li>
+            <li>Wound management approaches</li>
+            <li>Monitoring frequency</li>
+            <li>Escalation criteria</li>
+          </ul>
+        </div>
+      </fieldset>
+      
+      <div style="margin-top: 25px;">
+        <label>Signature of Nurse Assessor:</label>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+          <input type="text" name="signature" required style="flex: 1;">
+          <input type="date" name="signatureDate" required style="width: 200px;">
+        </div>
+      </div>
+      
+      <div class="clinical-note" style="margin-top: 20px;">
+        <i class="fas fa-exclamation-triangle"></i> <strong>Escalation Criteria:</strong> If Bates-Jensen score indicates severe impairment (>40), fever >38.5°C, rapid wound deterioration, or systemic signs of sepsis, notify physician immediately and consider urgent review.
+      </div>
+    </div>
+
+    <div class="buttons-container">
+      <button type="submit" class="submit-btn"><i class="fas fa-save"></i> Save & Submit Assessment</button>
+      <button type="button" id="printBtn" style="background:var(--primary);"><i class="fas fa-print"></i> Print Assessment</button>
+      <button type="button" id="clearBtn" style="background:var(--dark);"><i class="fas fa-eraser"></i> Clear Form</button>
+      <button type="button" id="demoBtn" style="background:var(--info);"><i class="fas fa-vial"></i> Load Demo Data</button>
+    </div>
+  </form>
+
+  <div style="text-align: center; margin-top: 40px; padding: 20px; color: #666; font-size: 0.9rem; border-top: 1px solid #eee;">
+    <p><i class="fas fa-graduation-cap"></i> <strong>College of Nursing - Medical-Surgical Nursing Department</strong></p>
+    <p>This comprehensive pressure ulcer assessment form developed by K.KANNAN., M.Sc (Nursing)</p>
+    <p>For educational and clinical use only</p>
+  </div>
+
+  <script>
+    // Risk assessment tool data
+    let bradenScores = {
+      sensory: 4,
+      moisture: 4,
+      activity: 4,
+      mobility: 4,
+      nutrition: 4,
+      friction: 3
+    };    
+    let nortonScores = {
+      physical: 4,
+      mental: 3,
+      activity: 4,
+      mobility: 4,
+      incontinence: 4
+    };
+    
+    let waterlowScores = {
+      build: 2,
+      skin: 1,
+      sexAge: 1,
+      continence: 1,
+      mobility: 1,
+      appetite: 1,
+      neurological: 1,
+      additional: 0
+    };
+    
+    // Initialize form
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set default dates
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('assessmentDate').value = today;
+      document.getElementById('admissionDate').value = today;
+      document.querySelector('[name="signatureDate"]').value = today;
+      
+      // Set next assessment to 1 week from now
+      const nextWeek = new Date();
+      nextWeek.setDate(nextWeek.getDate() + 7);
+      document.querySelector('[name="nextAssessment"]').value = nextWeek.toISOString().split('T')[0];
+      
+      // Initialize Braden scale with default selections
+      setTimeout(() => {
+        selectBradenOption('sensory', 4, document.querySelector('#sensorySubscale .scale-option:nth-child(4)'));
+        selectBradenOption('moisture', 4, document.querySelector('#moistureSubscale .scale-option:nth-child(4)'));
+        selectBradenOption('activity', 4, document.querySelector('#activitySubscale .scale-option:nth-child(4)'));
+        selectBradenOption('mobility', 4, document.querySelector('#mobilitySubscale .scale-option:nth-child(4)'));
+        selectBradenOption('nutrition', 4, document.querySelector('#nutritionSubscale .scale-option:nth-child(4)'));
+        selectBradenOption('friction', 3, document.querySelector('#frictionSubscale .scale-option:nth-child(3)'));
+      }, 100);
+      
+      // Initialize event listeners for the first ulcer
+      const firstUlcer = document.querySelector('.ulcer-entry');
+      if (firstUlcer) {
+        // Remove button
+        firstUlcer.querySelector('.remove-ulcer').addEventListener('click', function() {
+          removeUlcer(this);
+        });        
+        // Duplicate button
+        firstUlcer.querySelector('.duplicate-ulcer').addEventListener('click', function() {
+          duplicateUlcer(this);
+        });
+        
+        // Dimension inputs
+        firstUlcer.querySelectorAll('.dimension-input').forEach(input => {
+          input.addEventListener('input', function() {
+            calculateArea(this);
+          });
+        });
+        
+        // Tissue inputs
+        firstUlcer.querySelectorAll('.tissue-input').forEach(input => {
+          input.addEventListener('input', function() {
+            validateTissuePercentages(this);
+          });
+        });
+        
+        // Bates-Jensen selects
+        firstUlcer.querySelectorAll('.bates-select').forEach(select => {
+          select.addEventListener('change', function() {
+            calculateBatesJensenScore(this);
+          });
+        });
+        
+        // Color options
+        firstUlcer.querySelectorAll('.color-option').forEach(opt => {
+          opt.addEventListener('click', function() {
+            toggleColorOption(this);
+          });
+        });
+      }
+      
+      // Initialize sinus tracts toggle
+      const sinusRadios = document.querySelectorAll('input[name^="sinusTracts"]');
+      sinusRadios.forEach(radio => {
+        radio.addEventListener('change', function(e) {
+          const entry = e.target.closest('.ulcer-entry');
+          const index = entry.dataset.ulcerIndex;
+          const details = document.getElementById(`sinusDetails_${index}`);
+          
+          if (e.target.value === 'yes') {
+            details.style.display = 'block';
+          } else {
+            details.style.display = 'none';
+          }
+        });
+      });      
+      // Tool selection handling
+      document.querySelectorAll('input[name="riskTool"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+          // Hide all scale sections
+          document.querySelectorAll('.scale-section').forEach(section => {
+            section.classList.remove('active');
+          });
+          
+          // Show selected scale section
+          const selectedValue = this.value;
+          document.getElementById(`${selectedValue}ScaleSection`).classList.add('active');
+        });
+      });
+      
+      console.log("Pressure Ulcer Assessment Form v3.0 initialized successfully.");
+      console.log("Features: Braden, Norton & Waterlow Scales, Bates-Jensen Wound Assessment, Clinical Decision Support");
+    });
+    
+    // Braden Scale Selection
+    function selectBradenOption(category, score, element) {
+      // Remove selected class from all options in this category
+      const parent = element.closest('.braden-subscale');
+      parent.querySelectorAll('.scale-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked option
+      element.classList.add('selected');
+      
+      // Update score
+      bradenScores[category] = score;
+      
+      // Recalculate total
+      calculateBradenTotal();
+      
+      // Generate recommendations
+      generateBradenRecommendations();
+    }
+    
+    // Calculate Braden Total
+    function calculateBradenTotal() {
+      let total = 0;
+      for (const category in bradenScores) {
+        total += bradenScores[category];
+      }
+      
+      // Update display
+      document.getElementById('bradenTotalDisplay').textContent = total;
+      document.getElementById('bradenScore').value = total;      
+      // Update risk category
+      updateBradenRiskCategory(total);
+    }
+    
+    // Update Braden Risk Category
+    function updateBradenRiskCategory(score) {
+      const display = document.getElementById('bradenRiskCategory');
+      let category = 'none';
+      let text = 'NO RISK';
+      let icon = 'fa-shield-alt';
+      
+      if (score <= 9) {
+        category = 'very-high';
+        text = 'VERY HIGH RISK';
+        icon = 'fa-exclamation-triangle';
+      } else if (score <= 12) {
+        category = 'high';
+        text = 'HIGH RISK';
+        icon = 'fa-exclamation-circle';
+      } else if (score <= 14) {
+        category = 'moderate';
+        text = 'MODERATE RISK';
+        icon = 'fa-exclamation';
+      } else if (score <= 18) {
+        category = 'mild';
+        text = 'MILD RISK';
+        icon = 'fa-info-circle';
+      }
+      
+      display.className = `risk-category ${category}`;
+      display.innerHTML = `<i class="fas ${icon}"></i> Risk Category: ${text} (Score: ${score})`;
+    }
+    
+    // Generate Braden Recommendations
+    function generateBradenRecommendations() {
+      const recommendations = [];
+      const score = Object.values(bradenScores).reduce((a, b) => a + b, 0);
+      
+      // General recommendations based on total score
+      if (score <= 9) {
+        recommendations.push("🔴 <strong>Immediate action required:</strong> Implement all preventive measures immediately");
+        recommendations.push("🛌 <strong>Repositioning:</strong> 2-hourly turning schedule with 30° lateral tilt");
+        recommendations.push("🛡️ <strong>Support surface:</strong> Advanced pressure-redistributing mattress (alternating or air-fluidized)");
+        recommendations.push("👣 <strong>Heel protection:</strong> Offloading heel devices at all times");
+        recommendations.push("📋 <strong>Documentation:</strong> Daily skin inspection and documentation");
+        recommendations.push("👨‍⚕️ <strong>Referral:</strong> Immediate wound care nurse consultation");
+      } else if (score <= 12) {
+        recommendations.push("🟠 <strong>High risk protocol:</strong> Implement comprehensive prevention");
+        recommendations.push("⏰ <strong>Repositioning:</strong> 2-4 hourly turning depending on tissue tolerance");        recommendations.push("🛏️ <strong>Support surface:</strong> High-specification foam mattress");
+        recommendations.push("👁️ <strong>Monitoring:</strong> Skin inspection at least daily");
+        recommendations.push("💧 <strong>Skin care:</strong> Moisture barrier cream for at-risk areas");
+        recommendations.push("🍎 <strong>Nutrition:</strong> Nutritional assessment and supplementation if needed");
+      } else if (score <= 14) {
+        recommendations.push("🟡 <strong>Moderate risk:</strong> Standard preventive measures");
+        recommendations.push("🔄 <strong>Repositioning:</strong> 4-hourly turning schedule");
+        recommendations.push("🛋️ <strong>Support surface:</strong> Pressure-redistributing cushion for chair");
+        recommendations.push("🧴 <strong>Skin care:</strong> Regular moisturizing of dry skin");
+        recommendations.push("⚖️ <strong>Assessment:</strong> Reassess with any condition change");
+      } else if (score <= 18) {
+        recommendations.push("🟢 <strong>Mild risk:</strong> Basic preventive care");
+        recommendations.push("👀 <strong>Monitoring:</strong> Routine skin checks");
+        recommendations.push("💡 <strong>Education:</strong> Patient/family education on pressure relief");
+        recommendations.push("📝 <strong>Documentation:</strong> Weekly Braden reassessment");
+      } else {
+        recommendations.push("✅ <strong>No identified risk:</strong> Continue routine care");
+        recommendations.push("📚 <strong>Education:</strong> Provide pressure ulcer prevention information");
+        recommendations.push("🔄 <strong>Reassessment:</strong> Weekly Braden score monitoring");
+      }
+      
+      // Category-specific recommendations
+      if (bradenScores.sensory <= 2) {
+        recommendations.push("🖐️ <strong>Sensory deficit:</strong> Increase frequency of skin inspection (2-4 hourly)");
+        recommendations.push("🗣️ <strong>Communication:</strong> Use pain scales and behavioral cues for discomfort assessment");
+      }
+      
+      if (bradenScores.moisture <= 2) {
+        recommendations.push("💦 <strong>Moisture management:</strong> Implement structured incontinence management plan");
+        recommendations.push("🧽 <strong>Skin protection:</strong> Use moisture-wicking fabrics and barrier creams");
+        recommendations.push("🚽 <strong>Toileting:</strong> Scheduled toileting and prompt cleaning after incontinence");
+      }
+      
+      if (bradenScores.activity <= 2) {
+        recommendations.push("🛏️ <strong>Activity:</strong> Bed exercises and passive range of motion");
+        recommendations.push("🪑 <strong>Positioning:</strong> Limit chair time to 2 hours maximum");
+      }
+      
+      if (bradenScores.mobility <= 2) {
+        recommendations.push("🔄 <strong>Mobility:</strong> Assisted repositioning with turning sheet to reduce shear");
+        recommendations.push("📏 <strong>Positioning:</strong> Use positioning devices (pillows, wedges) to maintain 30° tilt");
+      }
+      
+      if (bradenScores.nutrition <= 2) {
+        recommendations.push("🍗 <strong>Nutrition:</strong> High-protein supplements (1.2-1.5g protein/kg/day)");
+        recommendations.push("💧 <strong>Hydration:</strong> Ensure adequate fluid intake (30-35mL/kg/day)");
+        recommendations.push("👩‍⚕️ <strong>Referral:</strong> Dietitian consultation for nutritional assessment");
+      }
+      
+      if (bradenScores.friction <= 1) {        recommendations.push("⬆️ <strong>Friction reduction:</strong> Use lift sheets for all patient transfers");
+        recommendations.push("🛏️ <strong>Bed management:</strong> Keep bed clean, dry, and wrinkle-free");
+        recommendations.push("👞 <strong>Shear reduction:</strong> Elevate head of bed ≤30° when possible");
+      }
+      
+      // Update display
+      const list = document.getElementById('recommendationsList');
+      list.innerHTML = recommendations.map(rec => `<p>${rec}</p>`).join('');
+    }
+    
+    // Norton Scale Selection
+    function selectNortonOption(category, score, element) {
+      // Remove selected class from all options in this category
+      const parent = element.closest('.norton-subscale');
+      parent.querySelectorAll('.scale-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked option
+      element.classList.add('selected');
+      
+      // Update score
+      nortonScores[category] = score;
+      
+      // Recalculate total
+      calculateNortonTotal();
+      
+      // Generate recommendations
+      generateNortonRecommendations();
+    }
+    
+    // Calculate Norton Total
+    function calculateNortonTotal() {
+      let total = 0;
+      for (const category in nortonScores) {
+        total += nortonScores[category];
+      }
+      
+      // Update display
+      document.getElementById('nortonTotalDisplay').textContent = total;
+      document.getElementById('nortonScore').value = total;
+      
+      // Update risk category
+      updateNortonRiskCategory(total);
+    }
+    
+    // Update Norton Risk Category
+    function updateNortonRiskCategory(score) {
+      const display = document.getElementById('nortonRiskCategory');
+      let category = 'none';      let text = 'NO RISK';
+      let icon = 'fa-shield-alt';
+      
+      if (score <= 9) {
+        category = 'very-high';
+        text = 'VERY HIGH RISK';
+        icon = 'fa-exclamation-triangle';
+      } else if (score <= 11) {
+        category = 'high';
+        text = 'HIGH RISK';
+        icon = 'fa-exclamation-circle';
+      } else if (score <= 13) {
+        category = 'moderate';
+        text = 'MODERATE RISK';
+        icon = 'fa-exclamation';
+      } else if (score <= 15) {
+        category = 'mild';
+        text = 'LOW RISK';
+        icon = 'fa-info-circle';
+      }
+      
+      display.className = `risk-category ${category}`;
+      display.innerHTML = `<i class="fas ${icon}"></i> Risk Category: ${text} (Score: ${score})`;
+    }
+    
+    // Generate Norton Recommendations
+    function generateNortonRecommendations() {
+      const recommendations = [];
+      const score = Object.values(nortonScores).reduce((a, b) => a + b, 0);
+      
+      // General recommendations based on total score
+      if (score <= 9) {
+        recommendations.push("🔴 <strong>Very high risk:</strong> Implement comprehensive pressure ulcer prevention protocol immediately");
+        recommendations.push("🛌 <strong>Repositioning:</strong> 2-hourly turning schedule with specialized support surfaces");
+        recommendations.push("🛡️ <strong>Support surface:</strong> Use alternating pressure mattress or air-fluidized bed");
+        recommendations.push("👣 <strong>Heel protection:</strong> Offload heels completely using suspension devices");
+        recommendations.push("📋 <strong>Documentation:</strong> Comprehensive skin assessment every shift");
+        recommendations.push("👨‍⚕️ <strong>Referral:</strong> Urgent consultation with wound care specialist");
+      } else if (score <= 11) {
+        recommendations.push("🟠 <strong>High risk:</strong> Implement enhanced prevention strategies");
+        recommendations.push("⏰ <strong>Repositioning:</strong> 2-hourly turning with 30° lateral tilt");
+        recommendations.push("🛏️ <strong>Support surface:</strong> High-specification foam mattress");
+        recommendations.push("👁️ <strong>Monitoring:</strong> Skin inspection every 8-12 hours");
+        recommendations.push("💧 <strong>Skin care:</strong> Apply moisture barrier creams to at-risk areas");
+        recommendations.push("🍎 <strong>Nutrition:</strong> High-protein diet and nutritional supplements");
+      } else if (score <= 13) {
+        recommendations.push("🟡 <strong>Moderate risk:</strong> Standard preventive measures");
+        recommendations.push("🔄 <strong>Repositioning:</strong> 4-hourly turning schedule");
+        recommendations.push("🛋️ <strong>Support surface:</strong> Pressure-redistributing cushion for chair use");
+        recommendations.push("🧴 <strong>Skin care:</strong> Maintain skin integrity with regular moisturizing");        recommendations.push("⚖️ <strong>Assessment:</strong> Reassess weekly or with any change in condition");
+      } else if (score <= 15) {
+        recommendations.push("🟢 <strong>Low risk:</strong> Basic preventive care");
+        recommendations.push("👀 <strong>Monitoring:</strong> Routine skin checks during daily care");
+        recommendations.push("💡 <strong>Education:</strong> Teach patient/family about pressure relief techniques");
+        recommendations.push("📝 <strong>Documentation:</strong> Document skin condition weekly");
+      } else {
+        recommendations.push("✅ <strong>No identified risk:</strong> Continue routine care");
+        recommendations.push("📚 <strong>Education:</strong> Provide general pressure ulcer prevention information");
+        recommendations.push("🔄 <strong>Reassessment:</strong> Reassess monthly or with any change in condition");
+      }
+      
+      // Update display
+      const list = document.getElementById('nortonRecommendationsList');
+      list.innerHTML = recommendations.map(rec => `<p>${rec}</p>`).join('');
+    }
+    
+    // Waterlow Scale Selection
+    function selectWaterlowOption(category, score, element) {
+      // Remove selected class from all options in this category
+      const parent = element.closest('.waterlow-subscale');
+      parent.querySelectorAll('.scale-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked option
+      element.classList.add('selected');
+      
+      // Update score
+      waterlowScores[category] = score;
+      
+      // Recalculate total
+      calculateWaterlowTotal();
+      
+      // Generate recommendations
+      generateWaterlowRecommendations();
+    }
+    
+    // Calculate Waterlow Total
+    function calculateWaterlowTotal() {
+      let total = 0;
+      for (const category in waterlowScores) {
+        total += waterlowScores[category];
+      }
+      
+      // Update display
+      document.getElementById('waterlowTotalDisplay').textContent = total;
+      document.getElementById('waterlowScore').value = total;
+      
+      // Update risk category      updateWaterlowRiskCategory(total);
+    }
+    
+    // Update Waterlow Risk Category
+    function updateWaterlowRiskCategory(score) {
+      const display = document.getElementById('waterlowRiskCategory');
+      let category = 'mild';
+      let text = 'AT RISK';
+      let icon = 'fa-exclamation-circle';
+      
+      if (score > 20) {
+        category = 'very-high';
+        text = 'VERY HIGH RISK';
+        icon = 'fa-exclamation-triangle';
+      } else if (score >= 15) {
+        category = 'high';
+        text = 'HIGH RISK';
+        icon = 'fa-exclamation-circle';
+      } else if (score >= 10) {
+        category = 'moderate';
+        text = 'MEDIUM RISK';
+        icon = 'fa-exclamation';
+      }
+      
+      display.className = `risk-category ${category}`;
+      display.innerHTML = `<i class="fas ${icon}"></i> Risk Category: ${text} (Score: ${score})`;
+    }
+    
+    // Generate Waterlow Recommendations
+    function generateWaterlowRecommendations() {
+      const recommendations = [];
+      const score = Object.values(waterlowScores).reduce((a, b) => a + b, 0);
+      
+      // General recommendations based on total score
+      if (score > 20) {
+        recommendations.push("🔴 <strong>Very high risk:</strong> Implement intensive pressure ulcer prevention protocol");
+        recommendations.push("🛌 <strong>Repositioning:</strong> 1-2 hourly turning with specialized equipment");
+        recommendations.push("🛡️ <strong>Support surface:</strong> Use dynamic support surface (alternating pressure or air-fluidized)");
+        recommendations.push("👣 <strong>Heel protection:</strong> Complete offloading with specialized boots");
+        recommendations.push("📋 <strong>Documentation:</strong> Hourly skin checks and detailed documentation");
+        recommendations.push("👨‍⚕️ <strong>Referral:</strong> Immediate multidisciplinary team involvement");
+      } else if (score >= 15) {
+        recommendations.push("🟠 <strong>High risk:</strong> Implement comprehensive prevention strategies");
+        recommendations.push("⏰ <strong>Repositioning:</strong> 2-hourly turning with 30° lateral tilt");
+        recommendations.push("🛏️ <strong>Support surface:</strong> High-specification foam mattress");
+        recommendations.push("👁️ <strong>Monitoring:</strong> Skin inspection every 4-8 hours");
+        recommendations.push("💧 <strong>Skin care:</strong> Apply protective barriers to vulnerable areas");
+        recommendations.push("🍎 <strong>Nutrition:</strong> Individualized nutritional plan with supplements");
+      } else if (score >= 10) {
+        recommendations.push("🟡 <strong>Medium risk:</strong> Standard preventive measures");        recommendations.push("🔄 <strong>Repositioning:</strong> 4-hourly turning schedule");
+        recommendations.push("🛋️ <strong>Support surface:</strong> Pressure-redistributing cushion for chair use");
+        recommendations.push("🧴 <strong>Skin care:</strong> Maintain skin integrity with appropriate products");
+        recommendations.push("⚖️ <strong>Assessment:</strong> Reassess weekly or with any change in condition");
+      } else {
+        recommendations.push("🟢 <strong>At risk:</strong> Basic preventive care");
+        recommendations.push("👀 <strong>Monitoring:</strong> Routine skin checks during daily care");
+        recommendations.push("💡 <strong>Education:</strong> Teach patient/family about pressure relief techniques");
+        recommendations.push("📝 <strong>Documentation:</strong> Document skin condition weekly");
+      }
+      
+      // Update display
+      const list = document.getElementById('waterlowRecommendationsList');
+      list.innerHTML = recommendations.map(rec => `<p>${rec}</p>`).join('');
+    }
+    
+    // Wound Area Calculation
+    document.addEventListener('input', function(e) {
+      if (e.target.classList.contains('dimension-input')) {
+        calculateArea(e.target);
+      }
+    });
+    
+    function calculateArea(input) {
+      const entry = input.closest('.ulcer-entry');
+      const length = parseFloat(entry.querySelector('[name="length[]"]').value) || 0;
+      const width = parseFloat(entry.querySelector('[name="width[]"]').value) || 0;
+      const area = (length * width).toFixed(1);
+      entry.querySelector('.area').textContent = area;
+    }
+    
+    // Wound Tissue Validation
+    document.addEventListener('input', function(e) {
+      if (e.target.classList.contains('tissue-input')) {
+        validateTissuePercentages(e.target);
+      }
+    });
+    
+    function validateTissuePercentages(input) {
+      const entry = input.closest('.ulcer-entry');
+      const index = entry.dataset.ulcerIndex;
+      
+      const granulation = parseFloat(entry.querySelector('[name="granulation[]"]').value) || 0;
+      const slough = parseFloat(entry.querySelector('[name="slough[]"]').value) || 0;
+      const eschar = parseFloat(entry.querySelector('[name="eschar[]"]').value) || 0;
+      const necrosis = parseFloat(entry.querySelector('[name="necrosis[]"]').value) || 0;
+      
+      const total = granulation + slough + eschar + necrosis;
+      
+      const errorEl = document.getElementById(`granulationError_${index}`);      if (total > 100) {
+        errorEl.textContent = `Total tissue percentage cannot exceed 100% (Current: ${total}%)`;
+        errorEl.style.display = 'block';
+        input.style.borderColor = 'var(--danger)';
+      } else {
+        errorEl.style.display = 'none';
+        input.style.borderColor = '';
+      }
+    }
+    
+    // Bates-Jensen Scoring
+    function calculateBatesJensenScore(select) {
+      const entry = select.closest('.ulcer-entry');
+      const index = entry.dataset.ulcerIndex;
+      
+      let score = 0;
+      const selects = entry.querySelectorAll('.bates-select');
+      selects.forEach(s => {
+        score += parseInt(s.value);
+      });
+      
+      // Update display
+      document.getElementById(`batesJensenTotal_${index}`).textContent = score;
+      
+      // Update risk category
+      updateBatesJensenRisk(score, index);
+    }
+    
+    function updateBatesJensenRisk(score, index) {
+      const display = document.getElementById(`batesJensenRiskCategory_${index}`);
+      let category = 'mild';
+      let text = 'MODERATE IMPAIRMENT (26-39)';
+      let icon = 'fa-exclamation-circle';
+      
+      if (score >= 40) {
+        category = 'very-high';
+        text = 'SEVERE IMPAIRMENT (>40)';
+        icon = 'fa-exclamation-triangle';
+      } else if (score >= 26) {
+        category = 'moderate';
+        text = 'MODERATE IMPAIRMENT (26-39)';
+        icon = 'fa-exclamation-circle';
+      } else if (score >= 14) {
+        category = 'mild';
+        text = 'MILD IMPAIRMENT (14-25)';
+        icon = 'fa-info-circle';
+      } else {
+        category = 'none';
+        text = 'HEALING WELL (≤13)';
+        icon = 'fa-check-circle';      }
+      
+      display.className = `risk-category ${category}`;
+      display.innerHTML = `<i class="fas ${icon}"></i> Wound Status: ${text}`;
+    }
+    
+    // Sinus Tracts Toggle
+    document.addEventListener('change', function(e) {
+      if (e.target.name && e.target.name.includes('sinusTracts')) {
+        const entry = e.target.closest('.ulcer-entry');
+        const index = entry.dataset.ulcerIndex;
+        const details = document.getElementById(`sinusDetails_${index}`);
+        
+        if (e.target.value === 'yes') {
+          details.style.display = 'block';
+        } else {
+          details.style.display = 'none';
+        }
+      }
+    });
+    
+    // Color Option Toggle
+    function toggleColorOption(element) {
+      element.classList.toggle('selected');
+      const checkbox = element.querySelector('input[type="checkbox"]');
+      checkbox.checked = !checkbox.checked;
+    }
+    
+    // Update Ulcer Indices
+    function updateUlcerIndices() {
+      const entries = document.querySelectorAll('.ulcer-entry');
+      entries.forEach((entry, index) => {
+        entry.dataset.ulcerIndex = index;
+        entry.querySelector('.ulcer-index').textContent = index + 1;
+        
+        // Update all named elements with the new index
+        const elements = entry.querySelectorAll('[name]');
+        elements.forEach(el => {
+          const name = el.name;
+          if (name.includes('_0')) {
+            el.name = name.replace('_0', `_${index}`);
+          }
+        });
+        
+        // Update error message IDs
+        ['granulationError', 'sloughError', 'escharError', 'necrosisError'].forEach(id => {
+          const errorEl = document.getElementById(`${id}_0`);
+          if (errorEl) {
+            errorEl.id = `${id}_${index}`;
+          }        });
+        
+        // Update Bates-Jensen IDs
+        const batesTotal = document.getElementById('batesJensenTotal_0');
+        if (batesTotal) batesTotal.id = `batesJensenTotal_${index}`;
+        
+        const batesRisk = document.getElementById('batesJensenRiskCategory_0');
+        if (batesRisk) {
+          batesRisk.id = `batesJensenRiskCategory_${index}`;
+        }
+        
+        // Update sinus details IDs
+        const sinusDetails = document.getElementById('sinusDetails_0');
+        if (sinusDetails) {
+          sinusDetails.id = `sinusDetails_${index}`;
+        }
+      });
+    }
+    
+    // Remove Ulcer
+    function removeUlcer(button) {
+      const entries = document.querySelectorAll('.ulcer-entry');
+      if (entries.length <= 1) {
+        alert("At least one ulcer entry must remain.");
+        return;
+      }
+      
+      if (confirm("Are you sure you want to remove this ulcer entry?")) {
+        button.closest('.ulcer-entry').remove();
+        updateUlcerIndices();
+      }
+    }
+    
+    // Duplicate Ulcer
+    function duplicateUlcer(button) {
+      const original = button.closest('.ulcer-entry');
+      const clone = original.cloneNode(true);
+      
+      // Clear input values
+      clone.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]), select, textarea').forEach(el => {
+        if (!el.classList.contains('area')) {
+          el.value = '';
+          if (el.type === 'number') {
+            el.value = '';
+          }
+        }
+      });
+      
+      clone.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(el => {
+        el.checked = false;      });
+      
+      // Reset error displays
+      clone.querySelectorAll('.error').forEach(error => {
+        error.style.display = 'none';
+      });
+      
+      // Reset area display
+      clone.querySelector('.area').textContent = '0.0';
+      
+      // Reset color options
+      clone.querySelectorAll('.color-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      // Reset Bates-Jensen score
+      const batesTotal = clone.querySelector('[id*="batesJensenTotal"]');
+      if (batesTotal) batesTotal.textContent = '13';
+      
+      const batesRisk = clone.querySelector('[id*="batesJensenRiskCategory"]');
+      if (batesRisk) {
+        batesRisk.className = 'risk-category mild';
+        batesRisk.innerHTML = '<i class="fas fa-exclamation-circle"></i> Wound Status: MODERATE IMPAIRMENT (26-39)';
+      }
+      
+      // Add event listeners
+      clone.querySelector('.remove-ulcer').addEventListener('click', function() {
+        removeUlcer(this);
+      });
+      
+      clone.querySelector('.duplicate-ulcer').addEventListener('click', function() {
+        duplicateUlcer(this);
+      });
+      
+      clone.querySelectorAll('.dimension-input').forEach(input => {
+        input.addEventListener('input', function() {
+          calculateArea(this);
+        });
+      });
+      
+      clone.querySelectorAll('.tissue-input').forEach(input => {
+        input.addEventListener('input', function() {
+          validateTissuePercentages(this);
+        });
+      });
+      
+      clone.querySelectorAll('.bates-select').forEach(select => {
+        select.addEventListener('change', function() {
+          calculateBatesJensenScore(this);
+        });      });
+      
+      clone.querySelectorAll('.color-option').forEach(opt => {
+        opt.addEventListener('click', function() {
+          toggleColorOption(this);
+        });
+      });
+      
+      // Append to container
+      document.getElementById('ulcersContainer').appendChild(clone);
+      updateUlcerIndices();
+    }
+    
+    // Add New Ulcer
+    document.getElementById('addUlcerBtn').addEventListener('click', function() {
+      const container = document.getElementById('ulcersContainer');
+      const firstEntry = container.querySelector('.ulcer-entry');
+      
+      if (firstEntry) {
+        duplicateUlcer(firstEntry.querySelector('.duplicate-ulcer'));
+      }
+    });
+    
+    // Form Submission
+    document.getElementById('pressureUlcerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Validate form
+      if (!validateForm()) {
+        return;
+      }
+      
+      // Collect form data
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+      
+      // Group ulcer data
+      const ulcers = [];
+      document.querySelectorAll('.ulcer-entry').forEach((entry, index) => {
+        const ulcerData = {
+          location: entry.querySelector('[name="ulcerLocation[]"]').value,
+          stage: entry.querySelector('[name="stage[]"]').value,
+          dimensions: {
+            length: entry.querySelector('[name="length[]"]').value,
+            width: entry.querySelector('[name="width[]"]').value,
+            depth: entry.querySelector('[name="depth[]"]').value,
+            area: entry.querySelector('.area').textContent
+          },
+          tissue: {
+            granulation: entry.querySelector('[name="granulation[]"]').value,            slough: entry.querySelector('[name="slough[]"]').value,
+            eschar: entry.querySelector('[name="eschar[]"]').value,
+            necrosis: entry.querySelector('[name="necrosis[]"]').value
+          },
+          batesJensenScore: document.getElementById(`batesJensenTotal_${index}`).textContent
+        };
+        ulcers.push(ulcerData);
+      });
+      
+      data.ulcers = ulcers;
+      
+      // Get selected risk tool
+      const selectedTool = document.querySelector('input[name="riskTool"]:checked').value;
+      if (selectedTool === 'braden') {
+        data.riskScore = document.getElementById('bradenScore').value;
+        data.riskSubscores = bradenScores;
+      } else if (selectedTool === 'norton') {
+        data.riskScore = document.getElementById('nortonScore').value;
+        data.riskSubscores = nortonScores;
+      } else if (selectedTool === 'waterlow') {
+        data.riskScore = document.getElementById('waterlowScore').value;
+        data.riskSubscores = waterlowScores;
+      }
+      
+      // Save to localStorage (for demo purposes)
+      const assessments = JSON.parse(localStorage.getItem('pressureUlcerAssessments') || '[]');
+      assessments.push({
+        id: Date.now(),
+        timestamp: new Date().toISOString(),
+        ...data
+      });
+      localStorage.setItem('pressureUlcerAssessments', JSON.stringify(assessments));
+      
+      // Show success message
+      showNotification('Assessment saved successfully!', 'success');
+      
+      // Generate summary
+      generateAutoRecommendations();
+    });
+    
+    // Form Validation
+    function validateForm() {
+      let isValid = true;
+      
+      // Check patient name
+      const patientName = document.getElementById('patientName').value.trim();
+      if (!patientName) {
+        showNotification("Please enter patient name.", "error");
+        isValid = false;
+      }      
+      // Check assessment date
+      const assessmentDate = document.getElementById('assessmentDate').value;
+      if (!assessmentDate) {
+        showNotification("Please select assessment date.", "error");
+        isValid = false;
+      }
+      
+      // Check wound tissue percentages
+      document.querySelectorAll('.ulcer-entry').forEach(entry => {
+        const granulation = parseFloat(entry.querySelector('[name="granulation[]"]').value) || 0;
+        const slough = parseFloat(entry.querySelector('[name="slough[]"]').value) || 0;
+        const eschar = parseFloat(entry.querySelector('[name="eschar[]"]').value) || 0;
+        const necrosis = parseFloat(entry.querySelector('[name="necrosis[]"]').value) || 0;
+        
+        const total = granulation + slough + eschar + necrosis;
+        if (total > 100) {
+          showNotification(`Wound tissue percentages cannot exceed 100% in ulcer #${entry.querySelector('.ulcer-index').textContent} (Current: ${total}%)`, "error");
+          isValid = false;
+        }
+      });
+      
+      return isValid;
+    }
+    
+    // Generate Auto Recommendations
+    function generateAutoRecommendations() {
+      // Get selected risk tool
+      const selectedTool = document.querySelector('input[name="riskTool"]:checked').value;
+      let riskScore = 0;
+      
+      if (selectedTool === 'braden') {
+        riskScore = parseInt(document.getElementById('bradenScore').value);
+      } else if (selectedTool === 'norton') {
+        riskScore = parseInt(document.getElementById('nortonScore').value);
+      } else if (selectedTool === 'waterlow') {
+        riskScore = parseInt(document.getElementById('waterlowScore').value);
+      }
+      
+      const ulcers = document.querySelectorAll('.ulcer-entry');
+      const hasSevereWound = Array.from(document.querySelectorAll('.bates-select')).some(select => {
+        return parseInt(select.value) >= 4;
+      });
+      
+      let recommendations = [];
+      
+      // Risk-based recommendations
+      if ((selectedTool === 'braden' && riskScore <= 12) || 
+          (selectedTool === 'norton' && riskScore <= 11) || 
+          (selectedTool === 'waterlow' && riskScore >= 15)) {        recommendations.push("📋 <strong>High Risk Protocol:</strong> Implement comprehensive pressure injury prevention bundle");
+        recommendations.push("👨‍⚕️ <strong>Multidisciplinary Team:</strong> Involve wound care nurse, dietitian, and physiotherapist");
+      }
+      
+      // Wound-based recommendations
+      if (hasSevereWound) {
+        recommendations.push("🩹 <strong>Wound Management:</strong> Consider advanced wound care products and specialist referral");
+        recommendations.push("🌡️ <strong>Monitoring:</strong> Monitor wound parameters at least twice daily");
+      }
+      
+      // Ulcer-based recommendations
+      if (ulcers.length > 0) {
+        recommendations.push("📏 <strong>Wound Measurement:</strong> Document wound dimensions weekly to track healing progress");
+        recommendations.push("📸 <strong>Photographic Documentation:</strong> Consider serial photographs for objective comparison");
+      }
+      
+      // Update display
+      const container = document.getElementById('autoRecommendations');
+      if (recommendations.length > 0) {
+        container.innerHTML = `
+          <p><i class="fas fa-robot"></i> <strong>Based on your assessment, consider these evidence-based recommendations:</strong></p>
+          ${recommendations.map(rec => `<p>${rec}</p>`).join('')}
+          <p class="clinical-note" style="margin-top: 15px;">
+            <i class="fas fa-lightbulb"></i> These recommendations are generated based on your input. Always use clinical judgment and consider patient-specific factors.
+          </p>
+        `;
+      }
+    }
+    
+    // Print Functionality
+    document.getElementById('printBtn').addEventListener('click', function() {
+      window.print();
+    });
+    
+    // Clear Form
+    document.getElementById('clearBtn').addEventListener('click', function() {
+      if (confirm("Are you sure you want to clear the entire form?")) {
+        document.getElementById('pressureUlcerForm').reset();
+        
+        // Reset all scale selections
+        document.querySelectorAll('.scale-option').forEach(opt => {
+          opt.classList.remove('selected');
+        });
+        
+        // Reset default scores
+        bradenScores = {
+          sensory: 4,
+          moisture: 4,
+          activity: 4,
+          mobility: 4,          nutrition: 4,
+          friction: 3
+        };
+        
+        nortonScores = {
+          physical: 4,
+          mental: 3,
+          activity: 4,
+          mobility: 4,
+          incontinence: 4
+        };
+        
+        waterlowScores = {
+          build: 2,
+          skin: 1,
+          sexAge: 1,
+          continence: 1,
+          mobility: 1,
+          appetite: 1,
+          neurological: 1,
+          additional: 0
+        };
+        
+        calculateBradenTotal();
+        generateBradenRecommendations();
+        calculateNortonTotal();
+        generateNortonRecommendations();
+        calculateWaterlowTotal();
+        generateWaterlowRecommendations();
+        
+        // Reset ulcer entries to one
+        const container = document.getElementById('ulcersContainer');
+        const entries = container.querySelectorAll('.ulcer-entry');
+        for (let i = 1; i < entries.length; i++) {
+          entries[i].remove();
+        }
+        
+        // Reset first entry
+        const firstEntry = container.querySelector('.ulcer-entry');
+        if (firstEntry) {
+          firstEntry.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]), select, textarea').forEach(el => {
+            if (!el.classList.contains('area')) {
+              el.value = '';
+            }
+          });
+          firstEntry.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(el => {
+            el.checked = false;
+          });
+          firstEntry.querySelector('.area').textContent = '0.0';
+                    // Reset Bates-Jensen selects
+          firstEntry.querySelectorAll('.bates-select').forEach(select => {
+            select.value = '1';
+          });
+          calculateBatesJensenScore(firstEntry.querySelector('.bates-select'));
+        }
+        
+        updateUlcerIndices();
+        
+        showNotification("Form cleared successfully.", "success");
+      }
+    });
+    
+    // Load Demo Data
+    document.getElementById('demoBtn').addEventListener('click', function() {
+      if (confirm("Load demo data? This will replace any existing data in the form.")) {
+        // Patient Info
+        document.getElementById('patientName').value = "John Smith";
+        document.getElementById('age').value = "72";
+        document.getElementById('IP No').value = "123456";
+        document.getElementById('ward').value = "Medical Ward 3B";
+        document.querySelector('input[name="gender"][value="male"]').checked = true;
+        
+        // Dates
+        const today = new Date();
+        const weekAgo = new Date(today);
+        weekAgo.setDate(today.getDate() - 7);
+        
+        document.getElementById('admissionDate').value = weekAgo.toISOString().split('T')[0];
+        document.getElementById('assessmentDate').value = today.toISOString().split('T')[0];
+        document.getElementById('assessedBy').value = "Nurse Jane Doe";
+        
+        // Risk Factors
+        document.querySelectorAll('input[name="riskFactors"]').forEach(cb => {
+          if (['immobility', 'incontinence', 'diabetes'].includes(cb.value)) {
+            cb.checked = true;
+          }
+        });
+        
+        // Common Sites
+        document.querySelectorAll('input[name="sites[]"]').forEach(cb => {
+          if (['sacrum', 'heels'].includes(cb.value)) {
+            cb.checked = true;
+          }
+        });
+        
+        // Skin Inspection
+        document.querySelector('input[name="skinCondition"][value="dry"]').checked = true;
+        document.getElementById('skinMoisture').value = 'dry';
+        document.getElementById('skinTurgor').value = 'fair';        
+        // Set risk tool to Braden
+        document.querySelector('input[name="riskTool"][value="braden"]').checked = true;
+        document.querySelectorAll('.scale-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        document.getElementById('bradenScaleSection').classList.add('active');
+        
+        // Braden Scale - Simulate moderate risk
+        selectBradenOption('sensory', 3, document.querySelector('#sensorySubscale .scale-option:nth-child(3)'));
+        selectBradenOption('moisture', 2, document.querySelector('#moistureSubscale .scale-option:nth-child(2)'));
+        selectBradenOption('activity', 1, document.querySelector('#activitySubscale .scale-option:nth-child(1)'));
+        selectBradenOption('mobility', 2, document.querySelector('#mobilitySubscale .scale-option:nth-child(2)'));
+        selectBradenOption('nutrition', 3, document.querySelector('#nutritionSubscale .scale-option:nth-child(3)'));
+        selectBradenOption('friction', 2, document.querySelector('#frictionSubscale .scale-option:nth-child(2)'));
+        
+        // Ulcer Data
+        const ulcerEntry = document.querySelector('.ulcer-entry');
+        ulcerEntry.querySelector('[name="ulcerLocation[]"]').value = "Sacrum, 3 cm left of midline";
+        ulcerEntry.querySelector('[name="stage[]"]').value = "stage3";
+        ulcerEntry.querySelector('[name="length[]"]').value = "5.2";
+        ulcerEntry.querySelector('[name="width[]"]').value = "3.8";
+        ulcerEntry.querySelector('[name="depth[]"]').value = "1.2";
+        calculateArea(ulcerEntry.querySelector('.dimension-input'));
+        
+        ulcerEntry.querySelector('[name="granulation[]"]').value = "60";
+        ulcerEntry.querySelector('[name="slough[]"]').value = "30";
+        ulcerEntry.querySelector('[name="eschar[]"]').value = "10";
+        
+        ulcerEntry.querySelector('[name="exudateAmount_0"][value="moderate"]').checked = true;
+        ulcerEntry.querySelector('[name="exudateType_0"][value="serosanguinous"]').checked = true;
+        ulcerEntry.querySelector('[name="exudateConsistency_0"]').value = "serous";
+        ulcerEntry.querySelector('[name="exudateOdour_0"][value="1"]').checked = true;
+        ulcerEntry.querySelector('[name="exudateColor_0"]').value = "Pink-tinged serous";
+        
+        // Select red and yellow colors
+        ulcerEntry.querySelectorAll('.color-option')[0].click(); // Red
+        ulcerEntry.querySelectorAll('.color-option')[2].click(); // Yellow
+        
+        ulcerEntry.querySelector('[name="woundTexture_0"]').value = "moist";
+        ulcerEntry.querySelector('[name="woundAdherence_0"]').value = "loose";
+        ulcerEntry.querySelector('[name="woundBleeding_0"]').value = "minimal";
+        
+        // Periwound
+        ulcerEntry.querySelectorAll('input[name="periwound_0[]"]').forEach((cb, idx) => {
+          if (idx === 0 || idx === 4) cb.checked = true; // Intact and Indurated
+        });
+        
+        // Edge
+        ulcerEntry.querySelector('input[name="edge_0[]"][value="attached"]').checked = true;        ulcerEntry.querySelector('[name="underminingDepth_0"]').value = "0.5";
+        ulcerEntry.querySelector('[name="underminingClock_0"]').value = "2-5 o'clock";
+        
+        // Pain
+        ulcerEntry.querySelector('[name="painRest_0"]').value = "3";
+        ulcerEntry.querySelector('[name="painDressing_0"]').value = "7";
+        ulcerEntry.querySelector('input[name="painChar_0[]"][value="aching"]').checked = true;
+        
+        // Bates-Jensen
+        ulcerEntry.querySelector('.bates-select[data-param="size"]').value = "3";
+        ulcerEntry.querySelector('.bates-select[data-param="depth"]').value = "3";
+        ulcerEntry.querySelector('.bates-select[data-param="edges"]').value = "2";
+        ulcerEntry.querySelector('.bates-select[data-param="undermining"]').value = "2";
+        ulcerEntry.querySelector('.bates-select[data-param="necrotic"]').value = "2";
+        ulcerEntry.querySelector('.bates-select[data-param="necroticAmount"]').value = "3";
+        ulcerEntry.querySelector('.bates-select[data-param="exudateType"]').value = "3";
+        ulcerEntry.querySelector('.bates-select[data-param="exudateAmount"]').value = "4";
+        ulcerEntry.querySelector('.bates-select[data-param="skinColor"]').value = "3";
+        ulcerEntry.querySelector('.bates-select[data-param="edema"]').value = "2";
+        ulcerEntry.querySelector('.bates-select[data-param="induration"]').value = "2";
+        ulcerEntry.querySelector('.bates-select[data-param="granulation"]').value = "4";
+        ulcerEntry.querySelector('.bates-select[data-param="epithelialization"]').value = "2";
+        calculateBatesJensenScore(ulcerEntry.querySelector('.bates-select'));
+        
+        ulcerEntry.querySelector('[name="temperature_0"]').value = "37.8";
+        ulcerEntry.querySelector('[name="heartRate_0"]').value = "92";
+        
+        // Prevention Plan
+        document.querySelector('[name="repositioning"]').value = "2-hourly";
+        document.querySelector('[name="lateralTilt"]').value = "yes";
+        document.querySelector('input[name="devices[]"][value="air"]').checked = true;
+        document.querySelector('input[name="devices[]"][value="heel"]').checked = true;
+        
+        document.querySelector('input[name="skincare[]"][value="barrier"]').checked = true;
+        document.querySelector('input[name="skincare[]"][value="moisturizer"]').checked = true;
+        
+        document.querySelector('input[name="nutrition[]"][value="highProtein"]').checked = true;
+        document.querySelector('input[name="nutrition[]"][value="supplements"]').checked = true;
+        document.querySelector('input[name="dieticianReferral"][value="yes"]').checked = true;
+        
+        document.querySelector('[name="primaryDressing"]').value = "foam";
+        document.querySelector('[name="secondaryDressing"]').value = "film";
+        document.querySelector('[name="dressingFrequency"]').value = "48h";
+        document.querySelector('input[name="cleansing[]"][value="saline"]').checked = true;
+        document.querySelector('input[name="debridement"][value="autolytic"]').checked = true;
+        
+        document.querySelector('input[name="referrals[]"][value="woundNurse"]').checked = true;
+        document.querySelector('input[name="referrals[]"][value="dietician"]').checked = true;
+        
+        const nextWeek = new Date(today);        nextWeek.setDate(today.getDate() + 7);
+        document.querySelector('[name="nextAssessment"]').value = nextWeek.toISOString().split('T')[0];
+        document.querySelector('[name="followUpFrequency"]').value = "2-3days";
+        
+        document.querySelector('[name="education"]').value = "Discussed pressure relief techniques, importance of nutrition, signs of infection to watch for, and dressing care instructions.";
+        
+        // Assessment Summary
+        document.querySelector('input[name="overallRisk"][value="high"]').checked = true;
+        document.querySelector('input[name="priority"][value="urgent"]').checked = true;
+        document.querySelector('input[name="prognosis"][value="fair"]').checked = true;
+        
+        document.querySelector('[name="signature"]').value = "Nurse Jane Doe";
+        document.querySelector('[name="signatureDate"]').value = today.toISOString().split('T')[0];
+        
+        // Generate recommendations
+        generateAutoRecommendations();
+        
+        showNotification("Demo data loaded successfully.", "success");
+      }
+    });
+    
+    // Notification System
+    function showNotification(message, type) {
+      // Remove existing notification
+      const existing = document.querySelector('.notification');
+      if (existing) existing.remove();
+      
+      // Create new notification
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        animation: slideIn 0.3s ease;
+      `;
+      
+      if (type === 'success') {
+        notification.style.background = 'linear-gradient(135deg, var(--success) 0%, #27ae60 100%)';
+      } else {
+        notification.style.background = 'linear-gradient(135deg, var(--danger) 0%, #c0392b 100%)';
+      }
+      
+      notification.innerHTML = `        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Auto-remove after 3 seconds
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+    
+    // Add CSS for notifications
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+      .risk-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 5px;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
